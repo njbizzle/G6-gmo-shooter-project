@@ -8,7 +8,7 @@ screen = pygame.display.set_mode((800, 600))
 
 pygame.display.set_caption("Top Down Shooter")
 
-##########################
+############  variabele   ##############
 
 speed = 15
 thing1 = 0
