@@ -8,7 +8,12 @@ screen = pygame.display.set_mode((800, 600))
 
 pygame.display.set_caption("Top Down Shooter")
 
-############  variabele   ##############
+
+############ todos ##################
+
+# TODO(0, not code) ask people about levels geting harder: faster enemys? more enemys? both?
+
+############  variabele  ##############
 
 speed = 15
 thing1 = 0
@@ -50,6 +55,11 @@ class sprite:
     def drawHitBox(self):
         self.hitbox = (self.x, self.y, 60, 55)
         pygame.draw.rect(screen, (255, 255, 255), self.hitbox, 2)
+
+class player:
+    def __init__(self, sprite):
+        self.sprite = sprite
+        # TODO(3) make sprite class, coment power ups for later, but put all the movement and stuff in the class [Push to GitHub!]
 
 
 #########################   enemy class   ##########################
@@ -116,7 +126,12 @@ enemySprite5.resize(60, 55)
 enemy1 = enemy(0,0,enemySprite1,1,enemyMinSpeed,enemyMaxSpeed,0,False)
 enemy1.ranPos()
 
+# TODO(1) make more instances of enemy classes [Push to GitHub!]
+# TODO(4) make a hit box for player that covers lazer so i can't run in to bullets [Push to GitHub!]
+
 ###################   loop   ########################
+
+
 
 while 1:
     pygame.event.get()
@@ -177,6 +192,8 @@ while 1:
             score +=1
             shooting1 = False
 
+    # TODO(1) put colider in function [Push to GitHub!]
+
     ###################    enemy stuff    ######################
 
     enemy1.move(enemyMinSpeed,enemyMaxSpeed)
@@ -203,6 +220,7 @@ while 1:
         print("YOUR FINAL SCORE IS:")
         print(score)
         break
+
     screen.fill((255, 255, 255))
     background.blit()
     spritey_da_sprite.blit()
