@@ -27,6 +27,12 @@ enemyMaxSpeed = 5
 score = 0
 bulletRadius = 15
 lives = 5
+resetLazer = False
+onScreen1 = False
+onScreen2 = False
+onScreen3 = False
+onScreen4 = False
+onScreen5 = False
 
 
 #####################   sprite class   ###################
@@ -74,6 +80,7 @@ class enemy:
         self.maxSpeed = maxSpeed
         self.hits =  hits
         self.isDied = isDied
+        self.hitbox = (self.x, self.y, 60, 55)
 
     def ranPos(self):
         self.x = random.randint(100, 700)
@@ -90,6 +97,11 @@ class enemy:
             self.ranPos()
             print("score:")
             print(score)
+
+    def colider(self, x, y, bulletRadius):
+        if y - bulletRadius < self.hitbox[1] + self.hitbox[3] and y + bulletRadius > self.hitbox[1]:
+            if x - bulletRadius > self.hitbox[0] and x - bulletRadius < self.hitbox[0] + self.hitbox[2]:
+                return True
 
 
 #################   create sprites   ##########################
@@ -126,7 +138,19 @@ enemySprite5.resize(60, 55)
 enemy1 = enemy(0,0,enemySprite1,1,enemyMinSpeed,enemyMaxSpeed,0,False)
 enemy1.ranPos()
 
-# TODO(1) make more instances of enemy classes [Push to GitHub!]
+enemy2 = enemy(0, 0, enemySprite1, 1, enemyMinSpeed, enemyMaxSpeed, 0, False)
+enemy2.ranPos()
+
+enemy3 = enemy(0, 0, enemySprite1, 1, enemyMinSpeed, enemyMaxSpeed, 0, False)
+enemy3.ranPos()
+
+enemy4 = enemy(0, 0, enemySprite1, 1, enemyMinSpeed, enemyMaxSpeed, 0, False)
+enemy4.ranPos()
+
+enemy5 = enemy(0, 0, enemySprite1, 1, enemyMinSpeed, enemyMaxSpeed, 0, False)
+enemy5.ranPos()
+
+# TODO(2) make more instances of enemy classes [Push to GitHub!]
 # TODO(4) make a hit box for player that covers lazer so i can't run in to bullets [Push to GitHub!]
 
 ###################   loop   ########################
@@ -182,22 +206,23 @@ while 1:
     if lazer1.y > 600 or lazer1.y < 0:
         shooting1 = False
 
+    if resetLazer == True:
+        shooting1 = False
+
     ###################   colider   ###################
 
-    if lazer1.y - bulletRadius < enemySprite1.hitbox[1] + enemySprite1.hitbox[3] and lazer1.y + bulletRadius > enemySprite1.hitbox[1]:
-        if lazer1.x - bulletRadius > enemySprite1.hitbox[0] and lazer1.x - bulletRadius < enemySprite1.hitbox[0] + enemySprite1.hitbox[2]:
-            enemy1.hit()
-            enemyMinSpeed +=1
-            enemyMaxSpeed +=1
-            score +=1
-            shooting1 = False
-
-    # TODO(1) put colider in function [Push to GitHub!]
+    if enemy1.colider(lazer1.x, lazer1.y, bulletRadius) == True:
+        enemy1.hit()
+        enemyMinSpeed += 1
+        enemyMaxSpeed += 1
+        score += 1
+        shooting1 = False
+        print("iuhriuhrghiufd")
 
     ###################    enemy stuff    ######################
 
     enemy1.move(enemyMinSpeed,enemyMaxSpeed)
-    if enemy1.y > 700:
+    if enemy1.y > 700 and onScreen2 == True:
         enemy1.y = 0
         enemy1.x = random.randint(100, 700)
         lives -=1
@@ -205,6 +230,47 @@ while 1:
         print(lives)
     enemySprite1.x = enemy1.x
     enemySprite1.y = enemy1.y
+
+    enemy2.move(enemyMinSpeed, enemyMaxSpeed)
+    if enemy2.y > 700 and onScreen2 == True:
+        enemy2.y = 0
+        enemy2.x = random.randint(100, 700)
+        lives -= 1
+        print("lives:")
+        print(lives)
+    enemySprite2.x = enemy2.x
+    enemySprite2.y = enemy2.y
+
+    enemy3.move(enemyMinSpeed, enemyMaxSpeed)
+    if enemy3.y > 700 and onScreen3 == True:
+        enemy3.y = 0
+        enemy3.x = random.randint(100, 700)
+        lives -= 1
+        print("lives:")
+        print(lives)
+    enemySprite3.x = enemy3.x
+    enemySprite3.y = enemy3.y
+
+    enemy4.move(enemyMinSpeed, enemyMaxSpeed)
+    if enemy4.y > 700 and onScreen4 == True:
+        enemy4.y = 0
+        enemy4.x = random.randint(100, 700)
+        lives -= 1
+        print("lives:")
+        print(lives)
+    enemySprite4.x = enemy4.x
+    enemySprite4.y = enemy4.y
+
+    enemy5.move(enemyMinSpeed, enemyMaxSpeed)
+    if enemy5.y > 700 and onScreen5 == True:
+        enemy5.y = 0
+        enemy5.x = random.randint(100, 700)
+        lives -= 1
+        print("lives:")
+        print(lives)
+    enemySprite5.x = enemy5.x
+    enemySprite5.y = enemy5.y
+
 
     ###################   bliting and stuff   ######################
     if spritey_da_sprite.x > 750:
@@ -225,8 +291,32 @@ while 1:
     background.blit()
     spritey_da_sprite.blit()
     lazer1.blit()
+
     enemySprite1.blit()
     enemySprite1.drawHitBox()
+    onScreen1 = True
+
+    if score > 5:
+        onScreen2 = True
+        enemySprite2.blit()
+        enemySprite2.drawHitBox()
+
+    if score > 10:
+        onScreen3 = True
+        enemySprite3.blit()
+        enemySprite3.drawHitBox()
+
+    if score > 15:
+        onScreen4 = True
+        enemySprite4.blit()
+        enemySprite4.drawHitBox()
+
+    if score > 20:
+        onScreen5 = True
+        enemySprite5.blit()
+        enemySprite5.drawHitBox()
+
 
     pygame.display.flip()
 
+#
