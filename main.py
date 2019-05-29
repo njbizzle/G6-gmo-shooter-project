@@ -11,7 +11,6 @@ pygame.display.set_caption("Top Down Shooter")
 
 ############ todos ##################
 
-# TODO(0, not code) ask people about levels geting harder: faster enemys? more enemys? both?
 
 ############  variabele  ##############
 
@@ -150,7 +149,7 @@ enemy4.ranPos()
 enemy5 = enemy(0, 0, enemySprite1, 1, enemyMinSpeed, enemyMaxSpeed, 0, False)
 enemy5.ranPos()
 
-# TODO(2) make more instances of enemy classes [Push to GitHub!]
+
 # TODO(4) make a hit box for player that covers lazer so i can't run in to bullets [Push to GitHub!]
 
 ###################   loop   ########################
@@ -196,6 +195,7 @@ while 1:
         lazer1.x = spritey_da_sprite.x + 66.5
         lazer1.y = spritey_da_sprite.y + 5
 
+
     if shooting1 == True:
         lazer1.y -= shootSpeed
 
@@ -211,7 +211,7 @@ while 1:
 
     ###################   colider   ###################
 
-    if enemy1.colider(lazer1.x, lazer1.y, bulletRadius) == True:
+    if enemy1.colider(lazer1.x, lazer1.y, bulletRadius):
         enemy1.hit()
         enemyMinSpeed += 1
         enemyMaxSpeed += 1
@@ -221,7 +221,8 @@ while 1:
 
     ###################    enemy stuff    ######################
 
-    enemy1.move(enemyMinSpeed,enemyMaxSpeed)
+    if onScreen1:
+        enemy1.move(enemyMinSpeed, enemyMaxSpeed)
     if enemy1.y > 700 and onScreen2 == True:
         enemy1.y = 0
         enemy1.x = random.randint(100, 700)
@@ -231,7 +232,8 @@ while 1:
     enemySprite1.x = enemy1.x
     enemySprite1.y = enemy1.y
 
-    enemy2.move(enemyMinSpeed, enemyMaxSpeed)
+    if onScreen2:
+        enemy2.move(enemyMinSpeed, enemyMaxSpeed)
     if enemy2.y > 700 and onScreen2 == True:
         enemy2.y = 0
         enemy2.x = random.randint(100, 700)
@@ -241,7 +243,8 @@ while 1:
     enemySprite2.x = enemy2.x
     enemySprite2.y = enemy2.y
 
-    enemy3.move(enemyMinSpeed, enemyMaxSpeed)
+    if onScreen3:
+        enemy3.move(enemyMinSpeed, enemyMaxSpeed)
     if enemy3.y > 700 and onScreen3 == True:
         enemy3.y = 0
         enemy3.x = random.randint(100, 700)
@@ -251,7 +254,8 @@ while 1:
     enemySprite3.x = enemy3.x
     enemySprite3.y = enemy3.y
 
-    enemy4.move(enemyMinSpeed, enemyMaxSpeed)
+    if onScreen4:
+        enemy4.move(enemyMinSpeed, enemyMaxSpeed)
     if enemy4.y > 700 and onScreen4 == True:
         enemy4.y = 0
         enemy4.x = random.randint(100, 700)
@@ -261,7 +265,8 @@ while 1:
     enemySprite4.x = enemy4.x
     enemySprite4.y = enemy4.y
 
-    enemy5.move(enemyMinSpeed, enemyMaxSpeed)
+    if onScreen5:
+        enemy5.move(enemyMinSpeed, enemyMaxSpeed)
     if enemy5.y > 700 and onScreen5 == True:
         enemy5.y = 0
         enemy5.x = random.randint(100, 700)
