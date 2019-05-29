@@ -32,6 +32,7 @@ onScreen2 = False
 onScreen3 = False
 onScreen4 = False
 onScreen5 = False
+isStartButtonPressed = False
 
 
 #####################   sprite class   ###################
@@ -61,11 +62,25 @@ class sprite:
         self.hitbox = (self.x, self.y, 60, 55)
         pygame.draw.rect(screen, (255, 255, 255), self.hitbox, 2)
 
+
+#####################   player class   ############################
+
 class player:
-    def __init__(self, sprite):
+    def __init__(self, sprite, x, y):
         self.sprite = sprite
+        self.x = x
+        self.y = y
         # TODO(3) make sprite class, coment power ups for later, but put all the movement and stuff in the class [Push to GitHub!]
 
+    def move(self):
+        if keys[100]:
+            self.x = self.x + speed
+        if keys[97]:
+            self.x = self.x - speed
+        if keys[115]:
+            self.y = self.y + speed
+        if keys[119]:
+            self.y = self.y - speed
 
 #########################   enemy class   ##########################
 
@@ -107,98 +122,70 @@ class enemy:
 
 spritey_da_sprite = sprite("sprite.png", 400, 500)
 spritey_da_sprite.resize(90, 85)
-
 lazer1 = sprite("bullet.png", 0, 0)
 lazer1.resize(bulletRadius * 2, bulletRadius * 2)
-
 background = sprite("background.png", 0, 0)
 background.resize(800, 600)
-
 enemySprite1 = sprite("EMEMY.png", 400, 300)
 enemySprite1.resize(60, 55)
-
-
 enemySprite2 = sprite("EMEMY.png", 400, 300)
 enemySprite2.resize(60, 55)
-
 enemySprite3 = sprite("EMEMY.png", 400, 300)
 enemySprite3.resize(60, 55)
-
-
 enemySprite4 = sprite("EMEMY.png", 400, 300)
 enemySprite4.resize(60, 55)
-
-
 enemySprite5 = sprite("EMEMY.png", 400, 300)
 enemySprite5.resize(60, 55)
+starButton = sprite("startButton.png", 400, 300)
 
 ##################   make the enemys   ##################
 
 enemy1 = enemy(0,0,enemySprite1,1,enemyMinSpeed,enemyMaxSpeed,0,False)
 enemy1.ranPos()
-
 enemy2 = enemy(0, 0, enemySprite1, 1, enemyMinSpeed, enemyMaxSpeed, 0, False)
 enemy2.ranPos()
-
 enemy3 = enemy(0, 0, enemySprite1, 1, enemyMinSpeed, enemyMaxSpeed, 0, False)
 enemy3.ranPos()
-
 enemy4 = enemy(0, 0, enemySprite1, 1, enemyMinSpeed, enemyMaxSpeed, 0, False)
 enemy4.ranPos()
-
 enemy5 = enemy(0, 0, enemySprite1, 1, enemyMinSpeed, enemyMaxSpeed, 0, False)
 enemy5.ranPos()
-
-
 # TODO(4) make a hit box for player that covers lazer so i can't run in to bullets [Push to GitHub!]
+# make the player #
+da_player = player(spritey_da_sprite, 400, 300)
 
-###################   loop   ########################
-
-
-
-while 1:
-    pygame.event.get()
-
+#########################   start loop   ###############################
+'''
+while isStartButtonPressed == False:
     keys = pygame.key.get_pressed()
-
-    if keys[100]:
-        spritey_da_sprite.x = spritey_da_sprite.x + speed
-        diretion1 = "right"
-    if keys[97]:
-        spritey_da_sprite.x = spritey_da_sprite.x - speed
-        diretion1 = "left"
-    if keys[115]:
-        spritey_da_sprite.y = spritey_da_sprite.y + speed
-        diretion1 = "up"
-    if keys[119]:
-        spritey_da_sprite.y = spritey_da_sprite.y - speed
-        diretion1 = "down"
     if keys[pygame.K_q]:
         break
 
-    if keys[pygame.K_RIGHT]:
-        diretion1 = "right"
-    if keys[pygame.K_LEFT]:
-        diretion1 = "left"
-    if keys[pygame.K_UP]:
-        diretion1 = "down"
-    if keys[pygame.K_DOWN]:
-        diretion1 = "up"
+    screen.fill((255, 0, 255))
+    starButton.blit()
+    pygame.display.flip()
+    print("the game is working, yeah!")
+'''
+#########################   game loop   ################################
 
+while 1:
+    pygame.event.get()
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_q]:
+        break
+
+    da_player.move()
     ##################   shooting   #####################
 
     if keys[pygame.K_SPACE]:
-        thing1 = 0
         shooting1 = True
 
     if shooting1 == False:
         lazer1.x = spritey_da_sprite.x + 66.5
         lazer1.y = spritey_da_sprite.y + 5
 
-
     if shooting1 == True:
         lazer1.y -= shootSpeed
-
 
     if lazer1.x > 800 or lazer1.x < 0:
         shooting1 = False
@@ -276,8 +263,8 @@ while 1:
     enemySprite5.x = enemy5.x
     enemySprite5.y = enemy5.y
 
-
     ###################   bliting and stuff   ######################
+
     if spritey_da_sprite.x > 750:
         spritey_da_sprite.x = 750
     elif spritey_da_sprite.x < -50:
@@ -300,6 +287,8 @@ while 1:
     enemySprite1.blit()
     enemySprite1.drawHitBox()
     onScreen1 = True
+    spritey_da_sprite.x = da_player.x
+    spritey_da_sprite.y = da_player.y
 
     if score > 5:
         onScreen2 = True
