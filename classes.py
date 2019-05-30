@@ -25,15 +25,15 @@ class sprite:
         self.sprite = pygame.transform.rotate(self.sprite, deg)
 
     def drawHitBox(self):
-        self.hitbox = (self.x + 10, self.y - 10, 110, 100)
+        self.rect = pygame.Rect((self.x, self.y), self.sprite.get_size())
         pygame.draw.rect(screen, (255, 255, 255), self.rect, 2)
 
 
 #####################   player class   ############################
 
 class player(sprite):
-    def __init__(self, sprite, x, y):
-        self.sprite = sprite
+    def __init__(self, file, x, y):
+        sprite.__init__(self, file, x, y)
         self.x = x
         self.y = y
 
@@ -56,15 +56,15 @@ class player(sprite):
 #################   enemy class   ##########################
 
 class enemy(sprite):
-    def __init__(self, x, y, sprite, how_many_hit_till_death, minSpeed, maxSpeed, hits=0, isDied=False, ):
+    def __init__(self, file, x, y, how_many_hit_till_death, minSpeed, maxSpeed, hits=0, ):
+        sprite.__init__(self, file, x, y)
         self.x = x
         self.y = y
-        self.sprite = sprite
         self.how_many_hit_till_death = how_many_hit_till_death
         self.minSpeed = minSpeed
         self.maxSpeed = maxSpeed
         self.hits = hits
-        self.isDied = isDied
+        self.isDied = False
 
     def ranPos(self):
         self.x = random.randint(100, 700)
@@ -77,11 +77,6 @@ class enemy(sprite):
         self.how_many_hit_till_death -= 1
         if self.hits > self.how_many_hit_till_death:
             self.isDied = True
-            # put animation here later
+            # put animation here laterd
             self.ranPos()
             print("score:")
-
-    def colider(self, x, y, bulletRadius):
-        if y - bulletRadius < self.hitbox[1] + self.hitbox[3] and y + bulletRadius > self.hitbox[1]:
-            if x - bulletRadius > self.hitbox[0] and x - bulletRadius < self.hitbox[0] + self.hitbox[2]:
-                return True

@@ -40,27 +40,27 @@ isStartButtonPressed = False
 
 #################   create sprites   ######################
 
-spritey_da_sprite = sprite("sprite.png", 400, 500)
+spritey_da_sprite = player("sprite.png", 400, 300)
 spritey_da_sprite.resize(90, 85)
 lazer1 = sprite("bullet.png", 0, 0)
 lazer1.resize(bulletRadius * 2, bulletRadius * 2)
 background = sprite("background.png", 0, 0)
 background.resize(800, 600)
-enemy1 = sprite("EMEMY.png", 400, 300)
+enemy1 = enemy("EMEMY.png", 400, 300, 1, enemyMinSpeed, enemyMaxSpeed)
 enemy1.resize(60, 55)
-enemy2 = sprite("EMEMY.png", 400, 300)
+enemy2 = enemy("EMEMY.png", 400, 300, 1, enemyMinSpeed, enemyMaxSpeed)
 enemy2.resize(60, 55)
-enemy3 = sprite("EMEMY.png", 400, 300)
+enemy3 = enemy("EMEMY.png", 400, 300, 1, enemyMinSpeed, enemyMaxSpeed)
 enemy3.resize(60, 55)
-enemy4 = sprite("EMEMY.png", 400, 300)
+enemy4 = enemy("EMEMY.png", 400, 300, 1, enemyMinSpeed, enemyMaxSpeed)
 enemy4.resize(60, 55)
-enemy5 = sprite("EMEMY.png", 400, 300)
+enemy5 = enemy("EMEMY.png", 400, 300, 1, enemyMinSpeed, enemyMaxSpeed)
 enemy5.resize(60, 55)
 starButton = sprite("startButton.png", 400, 300)
 
 #########################   start loop   ###############################
 '''
-while isStartButtonPressed == False:
+while not isStartButtonPressed:
     keys = pygame.key.get_pressed()
     if keys[pygame.K_q]:
         break
@@ -104,6 +104,29 @@ while 1:
         shooting1 = False
 
     ###################   colider   ###################
+    if enemy1.rect.colliderect(lazer1.rect):
+        enemy1.hit()
+        score += 1
+        print(score)
+    if enemy2.rect.colliderect(lazer1.rect):
+        enemy2.hit()
+        score += 1
+        print(score)
+    if enemy3.rect.colliderect(lazer1.rect):
+        enemy3.hit()
+        score += 1
+        print(score)
+    if enemy4.rect.colliderect(lazer1.rect):
+        enemy4.hit()
+        score += 1
+        print(score)
+    if enemy5.rect.colliderect(lazer1.rect):
+        enemy5.hit()
+        score += 1
+        print(score)
+    if spritey_da_sprite.rect.colliderect(enemy1.rect):
+        enemy1.hit()
+        score += 1
 
     ###################    enemy stuff    ######################
 
@@ -196,6 +219,8 @@ while 1:
         enemy5.blit()
         enemy5.drawHitBox()
 
+    lazer1.drawHitBox()
+    spritey_da_sprite.drawHitBox()
 
     pygame.display.flip()
 
