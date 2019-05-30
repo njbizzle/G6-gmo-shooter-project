@@ -59,6 +59,20 @@ enemy5 = enemy("enemy.png", 0, 0, 1, enemyMinSpeed, enemyMaxSpeed)
 enemy5.resize(60, 55)
 starButton = sprite("startButton.png", 400, 300)
 
+
+########################   def display ###########################
+def message_display(text):
+    largeText = pygame.font.Font('freesansbold.ttf', 115)
+    TextSurf, TextRect = text_objects(text, largeText)
+    TextRect.center = (400, 300)
+    screen.blit(TextSurf, TextRect)
+
+
+def text_objects(text, font):
+    textSurface = font.render(text, True, (0, 0, 0))
+    return textSurface, textSurface.get_rect()
+
+
 #########################   start loop   ###############################
 '''
 while not isStartButtonPressed:
@@ -106,25 +120,25 @@ while 1:
 
     ###################   colider   ###################
     if enemy1.rect.colliderect(lazer1.rect):
-        enemy1.hit()
-        score += 1
-        print(score)
+        if enemy1.hit():
+            score += 1
+            print(score)
     if enemy2.rect.colliderect(lazer1.rect):
-        enemy2.hit()
-        score += 1
-        print(score)
+        if enemy2.hit():
+            score += 1
+            print(score)
     if enemy3.rect.colliderect(lazer1.rect):
-        enemy3.hit()
-        score += 1
-        print(score)
+        if enemy3.hit():
+            score += 1
+            print(score)
     if enemy4.rect.colliderect(lazer1.rect):
-        enemy4.hit()
-        score += 1
-        print(score)
+        if enemy4.hit():
+            score += 1
+            print(score)
     if enemy5.rect.colliderect(lazer1.rect):
-        enemy5.hit()
-        score += 1
-        print(score)
+        if enemy5.hit():
+            score += 1
+            print(score)
     if spritey_da_sprite.rect.colliderect(enemy1.rect):
         lives = 0
     if spritey_da_sprite.rect.colliderect(enemy2.rect):
@@ -136,7 +150,7 @@ while 1:
     if spritey_da_sprite.rect.colliderect(enemy5.rect):
         lives = 0
 
-    ###################    enemy stuff    ######################
+    ###################    enemy stuff    #####################
 
     if onScreen1:
         enemy1.move(enemyMinSpeed, enemyMaxSpeed)
@@ -241,6 +255,7 @@ while 1:
     spritey_da_sprite.drawPlayerHitBox()
 
     pygame.display.flip()
+    message_display("iuhwquhbiewbuyibuyvburwibebyef")
 
 # # # # # # #
 #           #
