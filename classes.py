@@ -83,3 +83,4 @@ class enemy(sprite):
             # put animation here laterd
             self.ranPos()
             print("score:")
+            return True

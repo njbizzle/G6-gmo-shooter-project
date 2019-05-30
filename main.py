@@ -1,4 +1,4 @@
-import pygame
+import pygame, sys
 import random
 from classes import sprite
 from classes import player
@@ -37,6 +37,7 @@ onScreen3 = False
 onScreen4 = False
 onScreen5 = False
 isStartButtonPressed = False
+isGameOver = False
 
 #################   create sprites   ######################
 
@@ -61,17 +62,16 @@ starButton = sprite("startButton.png", 400, 300)
 
 
 ########################   def display ###########################
-def message_display(text):
-    largeText = pygame.font.Font('freesansbold.ttf', 115)
-    TextSurf, TextRect = text_objects(text, largeText)
-    TextRect.center = (400, 300)
-    screen.blit(TextSurf, TextRect)
+
+font = pygame.font.Font('freesansbold.ttf', 20)
+bigFont = pygame.font.Font('freesansbold.ttf', 100)
 
 
-def text_objects(text, font):
-    textSurface = font.render(text, True, (0, 0, 0))
-    return textSurface, textSurface.get_rect()
-
+def gameOver(score):
+    gameOverText = bigFont.render('Game Over', True, (0, 0, 0))
+    finalScoreText = font.render('Your Final Score is: ' + str(score), True, (0, 0, 0))
+    screen.blit(gameOverText, (100, 200))
+    screen.blit(finalScoreText, (300, 400))
 
 #########################   start loop   ###############################
 '''
@@ -141,14 +141,19 @@ while 1:
             print(score)
     if spritey_da_sprite.rect.colliderect(enemy1.rect):
         lives = 0
+        isGameOver = True
     if spritey_da_sprite.rect.colliderect(enemy2.rect):
         lives = 0
+        isGameOver = True
     if spritey_da_sprite.rect.colliderect(enemy3.rect):
         lives = 0
+        isGameOver = True
     if spritey_da_sprite.rect.colliderect(enemy4.rect):
         lives = 0
+        isGameOver = True
     if spritey_da_sprite.rect.colliderect(enemy5.rect):
         lives = 0
+        isGameOver = True
 
     ###################    enemy stuff    #####################
 
@@ -207,6 +212,11 @@ while 1:
     if not onScreen5:
         enemy5.ranPos()
     ###################   bliting and stuff   ######################
+    if lives < 1:
+        print("YOUR FINAL SCORE IS:")
+        print(score)
+        isGameOver = True
+
 
     if spritey_da_sprite.x > 750:
         spritey_da_sprite.x = 750
@@ -216,11 +226,6 @@ while 1:
         spritey_da_sprite.y = 550
     elif spritey_da_sprite.y < -50:
         spritey_da_sprite.y = -50
-
-    if lives < 1:
-        print("YOUR FINAL SCORE IS:")
-        print(score)
-        break
 
     screen.fill((255, 255, 255))
     background.blit()
@@ -254,8 +259,18 @@ while 1:
     lazer1.drawHitBox()
     spritey_da_sprite.drawPlayerHitBox()
 
+    scoreText = font.render('Score: ' + str(score), True, (0, 0, 0))
+    livesText = font.render('Lives: ' + str(lives), True, (0, 0, 0))
+
+    screen.blit(scoreText, (670, 10))
+    screen.blit(livesText, (670, 30))
+    if isGameOver:
+        spritey_da_sprite.y = 1000
+        screen.fill((255, 255, 255))
+        gameOver(score)
+
+
     pygame.display.flip()
-    message_display("iuhwquhbiewbuyibuyvburwibebyef")
 
 # # # # # # #
 #           #
