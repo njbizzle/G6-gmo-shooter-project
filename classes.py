@@ -51,6 +51,9 @@ class player(sprite):
     def reduce_health(self, damage):
         self.health -= damage
 
+    def drawPlayerHitBox(self):
+        self.rect = pygame.Rect((self.x + 10, self.y), self.sprite.get_size())
+        pygame.draw.rect(screen, (255, 255, 255), self.rect, 2)
 
 
 #################   enemy class   ##########################
