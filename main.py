@@ -46,8 +46,9 @@ onScreen2 = False
 onScreen3 = False
 onScreen4 = False
 onScreen5 = False
-isStartButtonPressed = False
 isGameOver = False
+startButtonPressed = False
+startButtonHovered = False
 
 #################   create sprites   ######################
 
@@ -68,16 +69,16 @@ enemy4 = enemy("enemy.png", 0, 0, 1, enemyMinSpeed, enemyMaxSpeed)
 enemy4.resize(60, 55)
 enemy5 = enemy("enemy.png", 0, 0, 1, enemyMinSpeed, enemyMaxSpeed)
 enemy5.resize(60, 55)
-starButton = sprite("starButton.png", 275, 300)
-starButton.resize(272, 120)
+startButton = sprite("startButton.png", 275, 300)
+startButton.resize(272, 120)
+startButtonlight = sprite("startButtonLight.png", 275, 300)
+startButtonlight.resize(272, 120)
 startBackgound = sprite("startBackground.png", 0, 0)
 startBackgound.resize(800, 600)
 deadBackgound = sprite("game over.png", 0, 0)
 deadBackgound.resize(800, 600)
 
-
-
-########################   def display ###########################
+########################  text display ###########################
 
 font = pygame.font.Font('freesansbold.ttf', 20)
 bigFont = pygame.font.Font('freesansbold.ttf', 70)
@@ -96,24 +97,47 @@ def gameOver(score):
 while 1:
     pygame.event.get()
     keys = pygame.key.get_pressed()
-    #######################  start   #########################
+
     if keys[pygame.K_BACKSLASH]:
         lives += 500
 
     if keys[pygame.K_q]:
         break
-    if not isStartButtonPressed:
+
+    #######################  start   #########################
+
+    if not startButtonPressed:
         if keys[pygame.K_SPACE]:
-            isStartButtonPressed = True
+            startButtonPressed = True
+
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        if 275 + 272 > mouse[1] > 275 and 300 + 120 > mouse[1] > 300:
+            startButtonHovered = True
+
+        if 275 + 272 > mouse[1] > 275 and 300 + 120 > mouse[1] > 300:
+            if click[0] == 1:
+                startButtonPressed = True
+        else:
+            startButtonHovered = False
 
         screen.fill((255, 255, 255))
         startText = bigFont.render(gameName, True, (0, 0, 0))
         startBackgound.blit()
         screen.blit(startText, (100, 150))
-        starButton.blit()
+
+        if startButtonHovered == True:
+            startButtonlight.blit()
+        elif startButtonHovered == False:
+            startButton.blit()
+
+        pygame.draw.rect(screen, (255, 255, 255), (275, 300, 272, 120), 3)
+
         pygame.display.flip()
 
     else:
+
         spritey_da_sprite.move(speed)
 
         ##################   shooting   #####################
