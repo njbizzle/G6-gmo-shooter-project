@@ -31,9 +31,7 @@ pygame.display.set_caption("Top Down Shooter")
 speed = 15
 thing1 = 0
 shooting1 = False
-diretion1 = "none"
 shootSpeed = 60
-diretion2 = "none"
 enemyDirition = "none"
 enemyMinSpeed = 2
 enemyMaxSpeed = 5
@@ -77,6 +75,7 @@ startBackgound = sprite("startBackground.png", 0, 0)
 startBackgound.resize(800, 600)
 deadBackgound = sprite("game over.png", 0, 0)
 deadBackgound.resize(800, 600)
+ligherStartButton = sprite('ligherButton.png', 275, 300)
 
 ########################  text display ###########################
 
@@ -118,6 +117,8 @@ while 1:
 
         if 275 + 272 > mouse[1] > 275 and 300 + 120 > mouse[1] > 300:
             if click[0] == 1:
+                ligherStartButton.blit()
+                time.sleep(1)
                 startButtonPressed = True
         else:
             startButtonHovered = False
