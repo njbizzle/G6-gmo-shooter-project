@@ -14,6 +14,7 @@ from classes import sprite
 from classes import player
 from classes import enemy
 import time
+import datetime
 
 
 pygame.init()
@@ -26,8 +27,10 @@ pygame.display.set_caption("Top Down Shooter")
 ############ todos ##################
 
 
-############  variabele  ##############
+############  variabeles  ##############
 
+start_time = time.time()
+fps = 30
 speed = 15
 thing1 = 0
 shooting1 = False
@@ -47,6 +50,9 @@ onScreen5 = False
 isGameOver = False
 startButtonPressed = False
 startButtonHovered = False
+clock = pygame.time.Clock()
+the_time = round(time.time() - start_time)
+time_left = 101 - the_time
 
 #################   create sprites   ######################
 
@@ -75,8 +81,6 @@ startBackgound = sprite("startBackground.png", 0, 0)
 startBackgound.resize(800, 600)
 deadBackgound = sprite("game over.png", 0, 0)
 deadBackgound.resize(800, 600)
-ligherStartButton = sprite('ligherButton.png', 275, 300)
-
 ########################  text display ###########################
 
 font = pygame.font.Font('freesansbold.ttf', 20)
@@ -94,11 +98,12 @@ def gameOver(score):
 #########################   game loop   ################################
 
 while 1:
+
+    time_left = 101 - the_time
+    the_time = round(time.time() - start_time)
+    timeText = font.render("Time: " + str(time_left), True, (0, 0, 0))
     pygame.event.get()
     keys = pygame.key.get_pressed()
-
-    if keys[pygame.K_BACKSLASH]:
-        lives += 500
 
     if keys[pygame.K_q]:
         break
@@ -114,11 +119,8 @@ while 1:
 
         if 275 + 272 > mouse[1] > 275 and 300 + 120 > mouse[1] > 300:
             startButtonHovered = True
-
-        if 275 + 272 > mouse[1] > 275 and 300 + 120 > mouse[1] > 300:
             if click[0] == 1:
-                ligherStartButton.blit()
-                time.sleep(1)
+                time.sleep(0.1)
                 startButtonPressed = True
         else:
             startButtonHovered = False
@@ -256,10 +258,11 @@ while 1:
         if not onScreen5:
             enemy5.ranPos()
         ###################   bliting and stuff   ######################
-        if lives < 1:
-            print("YOUR FINAL SCORE IS:")
-            print(score)
+
+        if lives < 1 or time_left == 0:
             isGameOver = True
+
+        clock.tick(fps)
 
         if spritey_da_sprite.x > 750:
             spritey_da_sprite.x = 750
@@ -307,6 +310,8 @@ while 1:
 
         screen.blit(scoreText, (670, 10))
         screen.blit(livesText, (670, 30))
+        screen.blit(timeText, (670, 50))
+        #        timer(50)
 
         if isGameOver:
             spritey_da_sprite.y = 1000
@@ -314,7 +319,6 @@ while 1:
             gameOver(score)
             if keys[pygame.K_SPACE]:
                 continue
-
 
     pygame.display.flip()
 
@@ -324,3 +328,6 @@ while 1:
 #           #
 #           #
 # # # # # # #
+
+
+#
