@@ -14,7 +14,6 @@ from classes import sprite
 from classes import player
 from classes import enemy
 import time
-import datetime
 
 
 pygame.init()
@@ -47,12 +46,13 @@ onScreen2 = False
 onScreen3 = False
 onScreen4 = False
 onScreen5 = False
-isGameOver = False
 startButtonPressed = False
 startButtonHovered = False
 clock = pygame.time.Clock()
 the_time = round(time.time() - start_time)
 time_left = 101 - the_time
+change = 0.1
+toxic = 0
 
 #################   create sprites   ######################
 
@@ -88,9 +88,21 @@ bigFont = pygame.font.Font('freesansbold.ttf', 70)
 midFont = pygame.font.Font("freesansbold.ttf", 50)
 
 
-def gameOver(score):
+def gameOver(toxic, died):
     gameOverText = bigFont.render('Game Over', True, (0, 0, 0))
-    finalScoreText = font.render('Your Final Score is: ' + str(score), True, (0, 0, 0))
+    if toxic > -1 and toxic < 1:
+        finalScoreText = font.render('Your farm is Extremely Healthy With no GMO', True, (0, 0, 0))
+    if toxic > 1 and toxic < 6:
+        finalScoreText = font.render('Your farm is good with little GMO', True, (0, 0, 0))
+    if toxic > 6 and toxic < 10:
+        finalScoreText = font.render('Your farm is kind of toxic', True, (0, 0, 0))
+    if toxic > 10:
+        if toxic < 15:
+            finalScoreText = font.render('Your farm is toxic', True, (0, 0, 0))
+    if toxic > 15:
+        finalScoreText = font.render('Your farm is SUPER toxic', True, (0, 0, 0))
+    else:
+        finalScoreText = font.render("weeeeeeeeeeeeeee", True, (0, 0, 0))
     deadBackgound.blit()
     screen.blit(gameOverText, (200, 250))
     screen.blit(finalScoreText, (300, 350))
@@ -165,26 +177,47 @@ while 1:
             shooting1 = False
 
         ###################   colider   ###################
+
         if enemy1.rect.colliderect(lazer1.rect):
             if enemy1.hit():
                 score += 1
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
                 print(score)
+
         if enemy2.rect.colliderect(lazer1.rect):
             if enemy2.hit():
                 score += 1
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
                 print(score)
+
         if enemy3.rect.colliderect(lazer1.rect):
             if enemy3.hit():
                 score += 1
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
                 print(score)
+
         if enemy4.rect.colliderect(lazer1.rect):
             if enemy4.hit():
                 score += 1
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
                 print(score)
+
         if enemy5.rect.colliderect(lazer1.rect):
             if enemy5.hit():
                 score += 1
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
                 print(score)
+
         if spritey_da_sprite.rect.colliderect(enemy1.rect):
             lives = 0
             isGameOver = True
@@ -208,9 +241,7 @@ while 1:
         if enemy1.y > 700 and onScreen1 == True:
             enemy1.y = 0
             enemy1.x = random.randint(100, 700)
-            lives -= 1
-            print("lives:")
-            print(lives)
+            toxic += 1
         if not onScreen1:
             enemy1.ranPos()
 
@@ -219,9 +250,7 @@ while 1:
         if enemy2.y > 700 and onScreen2 == True:
             enemy2.y = 0
             enemy2.x = random.randint(100, 700)
-            lives -= 1
-            print("lives:")
-            print(lives)
+            toxic += 1
         if not onScreen2:
             enemy2.ranPos()
 
@@ -230,9 +259,7 @@ while 1:
         if enemy3.y > 700 and onScreen3 == True:
             enemy3.y = 0
             enemy3.x = random.randint(100, 700)
-            lives -= 1
-            print("lives:")
-            print(lives)
+            toxic += 1
         if not onScreen3:
             enemy3.ranPos()
 
@@ -241,9 +268,7 @@ while 1:
         if enemy4.y > 700 and onScreen4 == True:
             enemy4.y = 0
             enemy4.x = random.randint(100, 700)
-            lives -= 1
-            print("lives:")
-            print(lives)
+            toxic += 1
         if not onScreen4:
             enemy4.ranPos()
 
@@ -252,15 +277,31 @@ while 1:
         if enemy5.y > 700 and onScreen5 == True:
             enemy5.y = 0
             enemy5.x = random.randint(100, 700)
-            lives -= 1
-            print("lives:")
-            print(lives)
+            toxic += 1
         if not onScreen5:
             enemy5.ranPos()
         ###################   bliting and stuff   ######################
 
-        if lives < 1 or time_left == 0:
-            isGameOver = True
+        if lives < 1:
+            onScreen5 = False
+            onScreen4 = False
+            onScreen3 = False
+            onScreen2 = False
+            onScreen1 = False
+            screen.fill((255, 255, 255))
+            gameOver(toxic, True)
+
+        if time_left == 0:
+            onScreen5 = False
+            onScreen4 = False
+            onScreen3 = False
+            onScreen2 = False
+            onScreen1 = False
+            screen.fill((255, 255, 255))
+            gameOver(toxic, False)
+
+        if change < 0.1:
+            change = 0.1
 
         clock.tick(fps)
 
@@ -306,20 +347,11 @@ while 1:
         spritey_da_sprite.drawPlayerHitBox()
 
         scoreText = font.render('Score: ' + str(score), True, (0, 0, 0))
-        livesText = font.render('Lives: ' + str(lives), True, (0, 0, 0))
 
         screen.blit(scoreText, (670, 10))
-        screen.blit(livesText, (670, 30))
-        screen.blit(timeText, (670, 50))
-        #        timer(50)
+        screen.blit(timeText, (670, 30))
 
-        if isGameOver:
-            spritey_da_sprite.y = 1000
-            screen.fill((255, 255, 255))
-            gameOver(score)
-            if keys[pygame.K_SPACE]:
-                continue
-
+    print(lives)
     pygame.display.flip()
 
 # # # # # # #
