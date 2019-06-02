@@ -54,6 +54,7 @@ time_left = 101 - the_time
 change = 0.1
 toxic = 0
 isGameOver = False
+stop = False
 
 #################   create sprites   ######################
 
@@ -355,7 +356,7 @@ while 1:
         screen.blit(scoreText, (670, 10))
         screen.blit(timeText, (670, 30))
 
-    if lives == 0:
+    if lives == 0 and stop == False:
         onScreen5 = False
         onScreen4 = False
         onScreen3 = False
@@ -365,8 +366,8 @@ while 1:
         gameOver(toxic, True)
         time_left = 1
 
-
-    if time_left == 0:
+    if time_left < 0:
+        stop = True
         onScreen5 = False
         onScreen4 = False
         onScreen3 = False
