@@ -53,6 +53,7 @@ the_time = round(time.time() - start_time)
 time_left = 101 - the_time
 change = 0.1
 toxic = 0
+isGameOver = False
 
 #################   create sprites   ######################
 
@@ -81,36 +82,62 @@ startBackgound = sprite("startBackground.png", 0, 0)
 startBackgound.resize(800, 600)
 deadBackgound = sprite("game over.png", 0, 0)
 deadBackgound.resize(800, 600)
+winBackgound = sprite("win screen.png", 0, 0)
+winBackgound.resize(800, 600)
 ########################  text display ###########################
 
 font = pygame.font.Font('freesansbold.ttf', 20)
 bigFont = pygame.font.Font('freesansbold.ttf', 70)
 midFont = pygame.font.Font("freesansbold.ttf", 50)
-
+toxic = 10
 
 def gameOver(toxic, died):
-    gameOverText = bigFont.render('Game Over', True, (0, 0, 0))
-    if toxic > -1 and toxic < 1:
-        finalScoreText = font.render('Your farm is Extremely Healthy With no GMO', True, (0, 0, 0))
-    elif toxic > 1 and toxic < 6:
-        finalScoreText = font.render('Your farm is good with little GMO', True, (0, 0, 0))
-    elif toxic > 6 and toxic < 10:
-        finalScoreText = font.render('Your farm is kind of toxic', True, (0, 0, 0))
-    elif toxic > 10 and toxic < 15:
-        finalScoreText = font.render('Your farm is toxic', True, (0, 0, 0))
-    elif toxic > 15:
-        finalScoreText = font.render('Your farm is SUPER toxic', True, (0, 0, 0))
-    else:
-        finalScoreText = font.render("weeeeeeeeeeeeeee", True, (0, 0, 0))
-    deadBackgound.blit()
-    screen.blit(gameOverText, (200, 250))
-    screen.blit(finalScoreText, (300, 350))
+    isToxic = False
+
+    if died:
+        deadBackgound.blit()
+        gameOverText = bigFont.render('Game Over', True, (0, 0, 0))
+        screen.blit(gameOverText, (200, 300))
+
+    elif not died:
+
+        winBackgound.blit()
+
+        if toxic > -1 and toxic < 1:
+            finalScoreText = font.render('Your farm is Extremely Healthy With no GMO', True, (0, 0, 0))
+            screen.blit(finalScoreText, (190, 350))
+            isToxic = False
+
+        elif toxic > 0 and toxic < 6:
+            finalScoreText = font.render('Your farm is OK with little GMO', True, (0, 0, 0))
+            screen.blit(finalScoreText, (235, 350))
+            isToxic = False
+
+        elif toxic > 5 and toxic < 10:
+            finalScoreText = font.render('Your farm is kind of toxic', True, (0, 30, 0))
+            screen.blit(finalScoreText, (270, 350))
+            isToxic = True
+
+        elif toxic > 9 and toxic < 15:
+            finalScoreText = font.render('Your farm is toxic', True, (0, 100, 0))
+            screen.blit(finalScoreText, (310, 350))
+            isToxic = True
+
+        elif toxic > 15:
+            finalScoreText = font.render('Your farm is SUPER toxic', True, (0, 200, 0))
+            screen.blit(finalScoreText, (280, 350))
+            isToxic = True
+
+        if isToxic == True:
+            gameOverText = bigFont.render('You Win-ish', True, (0, 0, 0))
+        elif isToxic == False:
+            gameOverText = bigFont.render('You Win', True, (0, 0, 0))
+        screen.blit(gameOverText, (200, 250))
 
 #########################   game loop   ################################
 
 while 1:
 
-    time_left = 20 - the_time
     the_time = round(time.time() - start_time)
     timeText = font.render("Time: " + str(time_left), True, (0, 0, 0))
     pygame.event.get()
@@ -153,6 +180,7 @@ while 1:
     else:
 
         spritey_da_sprite.move(speed)
+        time_left = 20 - the_time
 
         ##################   shooting   #####################
 
@@ -335,6 +363,8 @@ while 1:
         onScreen1 = False
         screen.fill((255, 255, 255))
         gameOver(toxic, True)
+        time_left = 1
+
 
     if time_left == 0:
         onScreen5 = False
@@ -345,7 +375,6 @@ while 1:
         screen.fill((255, 255, 255))
         gameOver(toxic, False)
 
-    print(lives)
     pygame.display.flip()
 
 # # # # # # #

@@ -82,5 +82,4 @@ class enemy(sprite):
             self.isDied = True
             # put animation here laterd
             self.ranPos()
-            print("score:")
             return True
