@@ -92,14 +92,13 @@ def gameOver(toxic, died):
     gameOverText = bigFont.render('Game Over', True, (0, 0, 0))
     if toxic > -1 and toxic < 1:
         finalScoreText = font.render('Your farm is Extremely Healthy With no GMO', True, (0, 0, 0))
-    if toxic > 1 and toxic < 6:
+    elif toxic > 1 and toxic < 6:
         finalScoreText = font.render('Your farm is good with little GMO', True, (0, 0, 0))
-    if toxic > 6 and toxic < 10:
+    elif toxic > 6 and toxic < 10:
         finalScoreText = font.render('Your farm is kind of toxic', True, (0, 0, 0))
-    if toxic > 10:
-        if toxic < 15:
-            finalScoreText = font.render('Your farm is toxic', True, (0, 0, 0))
-    if toxic > 15:
+    elif toxic > 10 and toxic < 15:
+        finalScoreText = font.render('Your farm is toxic', True, (0, 0, 0))
+    elif toxic > 15:
         finalScoreText = font.render('Your farm is SUPER toxic', True, (0, 0, 0))
     else:
         finalScoreText = font.render("weeeeeeeeeeeeeee", True, (0, 0, 0))
@@ -111,7 +110,7 @@ def gameOver(toxic, died):
 
 while 1:
 
-    time_left = 101 - the_time
+    time_left = 20 - the_time
     the_time = round(time.time() - start_time)
     timeText = font.render("Time: " + str(time_left), True, (0, 0, 0))
     pygame.event.get()
@@ -184,7 +183,6 @@ while 1:
                 enemyMinSpeed += change
                 enemyMaxSpeed += change
                 change -= 0.02
-                print(score)
 
         if enemy2.rect.colliderect(lazer1.rect):
             if enemy2.hit():
@@ -192,7 +190,6 @@ while 1:
                 enemyMinSpeed += change
                 enemyMaxSpeed += change
                 change -= 0.02
-                print(score)
 
         if enemy3.rect.colliderect(lazer1.rect):
             if enemy3.hit():
@@ -200,7 +197,6 @@ while 1:
                 enemyMinSpeed += change
                 enemyMaxSpeed += change
                 change -= 0.02
-                print(score)
 
         if enemy4.rect.colliderect(lazer1.rect):
             if enemy4.hit():
@@ -208,7 +204,6 @@ while 1:
                 enemyMinSpeed += change
                 enemyMaxSpeed += change
                 change -= 0.02
-                print(score)
 
         if enemy5.rect.colliderect(lazer1.rect):
             if enemy5.hit():
@@ -216,7 +211,6 @@ while 1:
                 enemyMinSpeed += change
                 enemyMaxSpeed += change
                 change -= 0.02
-                print(score)
 
         if spritey_da_sprite.rect.colliderect(enemy1.rect):
             lives = 0
@@ -282,24 +276,6 @@ while 1:
             enemy5.ranPos()
         ###################   bliting and stuff   ######################
 
-        if lives < 1:
-            onScreen5 = False
-            onScreen4 = False
-            onScreen3 = False
-            onScreen2 = False
-            onScreen1 = False
-            screen.fill((255, 255, 255))
-            gameOver(toxic, True)
-
-        if time_left == 0:
-            onScreen5 = False
-            onScreen4 = False
-            onScreen3 = False
-            onScreen2 = False
-            onScreen1 = False
-            screen.fill((255, 255, 255))
-            gameOver(toxic, False)
-
         if change < 0.1:
             change = 0.1
 
@@ -351,6 +327,24 @@ while 1:
         screen.blit(scoreText, (670, 10))
         screen.blit(timeText, (670, 30))
 
+    if lives == 0:
+        onScreen5 = False
+        onScreen4 = False
+        onScreen3 = False
+        onScreen2 = False
+        onScreen1 = False
+        screen.fill((255, 255, 255))
+        gameOver(toxic, True)
+
+    if time_left == 0:
+        onScreen5 = False
+        onScreen4 = False
+        onScreen3 = False
+        onScreen2 = False
+        onScreen1 = False
+        screen.fill((255, 255, 255))
+        gameOver(toxic, False)
+
     print(lives)
     pygame.display.flip()
 
@@ -360,6 +354,3 @@ while 1:
 #           #
 #           #
 # # # # # # #
-
-
-#
