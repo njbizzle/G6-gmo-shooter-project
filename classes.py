@@ -80,6 +80,12 @@ class enemy(sprite):
         self.how_many_hit_till_death -= 1
         if self.hits > self.how_many_hit_till_death:
             self.isDied = True
-            # put animation here laterd
             self.ranPos()
             return True
+
+    def corn_or_gmo(self):
+        da_var = random.randint(1, 2)
+        if da_var == 1:
+            return "gmo"
+        if da_var == 2:
+            return "corn"

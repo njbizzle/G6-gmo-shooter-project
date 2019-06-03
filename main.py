@@ -55,7 +55,11 @@ change = 0.1
 toxic = 0
 isGameOver = False
 stop = False
-
+is_cow1_sick = False
+is_cow2_sick = False
+is_cow3_sick = False
+is_cow4_sick = False
+is_cow5_sick = False
 #################   create sprites   ######################
 
 spritey_da_sprite = player("sprite.png", 400, 300)
@@ -85,12 +89,48 @@ deadBackgound = sprite("game over.png", 0, 0)
 deadBackgound.resize(800, 600)
 winBackgound = sprite("win screen.png", 0, 0)
 winBackgound.resize(800, 600)
+cow1 = sprite("cow.png", 400, 300)
+cow1.resize(92, 52)
+sickCow1 = sprite("sickcow.png", 400, 300)
+sickCow1.resize(92, 52)
+cow2 = sprite("cow.png", 400, 300)
+cow2.resize(92, 52)
+sickCow2 = sprite("sickcow.png", 400, 300)
+sickCow2.resize(92, 52)
+cow3 = sprite("cow.png", 400, 300)
+cow3.resize(92, 52)
+sickCow3 = sprite("sickcow.png", 400, 300)
+sickCow3.resize(92, 52)
+cow4 = sprite("cow.png", 400, 300)
+cow4.resize(92, 52)
+sickCow4 = sprite("sickcow.png", 400, 300)
+sickCow4.resize(92, 52)
+cow5 = sprite("cow.png", 400, 300)
+cow5.resize(92, 52)
+sickCow5 = sprite("sickcow.png", 400, 300)
+sickCow5.resize(92, 52)
+
+cow1.x = random.randint(100, 700)
+cow1.y = random.randint(300, 500)
+
+cow2.x = random.randint(100, 700)
+cow2.y = random.randint(300, 500)
+
+cow3.x = random.randint(100, 700)
+cow3.y = random.randint(300, 500)
+
+cow4.x = random.randint(100, 700)
+cow4.y = random.randint(300, 500)
+
+cow5.x = random.randint(100, 700)
+cow5.y = random.randint(300, 500)
+
 ########################  text display ###########################
 
 font = pygame.font.Font('freesansbold.ttf', 20)
 bigFont = pygame.font.Font('freesansbold.ttf', 70)
 midFont = pygame.font.Font("freesansbold.ttf", 50)
-toxic = 10
+
 
 def gameOver(toxic, died):
     isToxic = False
@@ -181,7 +221,7 @@ while 1:
     else:
 
         spritey_da_sprite.move(speed)
-        time_left = 20 - the_time
+        time_left = 30 - the_time
 
         ##################   shooting   #####################
 
@@ -241,6 +281,49 @@ while 1:
                 enemyMaxSpeed += change
                 change -= 0.02
 
+        #############################################
+
+        if enemy1.rect.colliderect(cow1.rect):
+            enemy1.hit()
+            score += 1
+            enemyMinSpeed += change
+            enemyMaxSpeed += change
+            change -= 0.02
+            is_cow1_sick = True
+
+        if enemy2.rect.colliderect(cow2.rect):
+            enemy2.hit()
+
+            enemyMinSpeed += change
+            enemyMaxSpeed += change
+            change -= 0.02
+            is_cow2_sick = True
+
+        if enemy3.rect.colliderect(cow3.rect):
+            enemy3.hit()
+
+            enemyMinSpeed += change
+            enemyMaxSpeed += change
+            change -= 0.02
+            is_cow3_sick = True
+
+        if enemy4.rect.colliderect(cow4.rect):
+            enemy4.hit()
+
+            enemyMinSpeed += change
+            enemyMaxSpeed += change
+            change -= 0.02
+            is_cow4_sick = True
+
+        if enemy5.rect.colliderect(cow5.rect):
+            enemy5.hit()
+
+            enemyMinSpeed += change
+            enemyMaxSpeed += change
+            change -= 0.02
+            is_cow5_sick = True
+
+
         if spritey_da_sprite.rect.colliderect(enemy1.rect):
             lives = 0
             isGameOver = True
@@ -256,6 +339,23 @@ while 1:
         if spritey_da_sprite.rect.colliderect(enemy5.rect):
             lives = 0
             isGameOver = True
+        ###################  cows ###############################
+
+        sickCow1.x = cow1.x
+        sickCow1.y = cow1.y
+
+        sickCow2.x = cow2.x
+        sickCow2.y = cow2.y
+
+        sickCow3.x = cow3.x
+        sickCow3.y = cow3.y
+
+        sickCow4.x = cow4.x
+        sickCow4.y = cow4.y
+
+        sickCow5.x = cow5.x
+        sickCow5.y = cow5.y
+
 
         ###################    enemy stuff    #####################
 
@@ -348,6 +448,32 @@ while 1:
             enemy5.blit()
             enemy5.drawHitBox()
 
+        if not is_cow1_sick:
+            cow1.blit()
+        else:
+            sickCow1.blit()
+
+        if not is_cow2_sick:
+            cow2.blit()
+        else:
+            sickCow2.blit()
+
+        if not is_cow3_sick:
+            cow3.blit()
+        else:
+            sickCow3.blit()
+
+        if not is_cow4_sick:
+            cow4.blit()
+        else:
+            sickCow4.blit()
+
+        if not is_cow5_sick:
+            cow5.blit()
+        else:
+            sickCow5.blit()
+
+
         lazer1.drawHitBox()
         spritey_da_sprite.drawPlayerHitBox()
 
@@ -375,7 +501,6 @@ while 1:
         onScreen1 = False
         screen.fill((255, 255, 255))
         gameOver(toxic, False)
-
     pygame.display.flip()
 
 # # # # # # #
