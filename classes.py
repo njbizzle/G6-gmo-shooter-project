@@ -83,9 +83,3 @@ class enemy(sprite):
             self.ranPos()
             return True
 
-    def corn_or_gmo(self):
-        da_var = random.randint(1, 2)
-        if da_var == 1:
-            return "gmo"
-        if da_var == 2:
-            return "corn"
