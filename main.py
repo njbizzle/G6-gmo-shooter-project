@@ -28,7 +28,7 @@ pygame.display.set_caption("Top Down Shooter")
 
 ############  variabeles  ##############
 
-gametime = 20
+gametime = 30
 start_time = time.time()
 fps = 30
 speed = 15
@@ -151,26 +151,26 @@ def gameOver(toxic, died):
         winBackgound.blit()
 
         if toxic > -1 and toxic < 1:
-            finalScoreText = font.render('Your farm is Extremely Healthy With no GMO', True, (0, 0, 0))
+            finalScoreText = font.render('Your farm is Extremely Healthy with no GMO', True, (0, 0, 0))
             screen.blit(finalScoreText, (190, 350))
             isToxic = False
 
-        elif toxic > 0 and toxic < 6:
+        elif toxic > 0 and toxic < 3:
             finalScoreText = font.render('Your farm is OK with little GMO', True, (0, 0, 0))
             screen.blit(finalScoreText, (235, 350))
             isToxic = False
 
-        elif toxic > 5 and toxic < 10:
+        elif toxic > 2 and toxic < 7:
             finalScoreText = font.render('Your farm is kind of toxic', True, (0, 30, 0))
             screen.blit(finalScoreText, (270, 350))
             isToxic = True
 
-        elif toxic > 9 and toxic < 15:
+        elif toxic > 6 and toxic < 10:
             finalScoreText = font.render('Your farm is toxic', True, (0, 100, 0))
             screen.blit(finalScoreText, (310, 350))
             isToxic = True
 
-        elif toxic > 15:
+        elif toxic > 10:
             finalScoreText = font.render('Your farm is SUPER toxic', True, (0, 200, 0))
             screen.blit(finalScoreText, (280, 350))
             isToxic = True
@@ -181,37 +181,39 @@ def gameOver(toxic, died):
             gameOverText = bigFont.render('You Win', True, (0, 0, 0))
         screen.blit(gameOverText, (270, 250))
 
-    cowDeaths = []
+        cowDeaths = []
 
-    if cow1_dead:
-        cowDeaths.append(1)
-    if cow2_dead:
-        cowDeaths.append(1)
-    if cow3_dead:
-        cowDeaths.append(1)
-    if cow4_dead:
-        cowDeaths.append(1)
-    if cow5_dead:
-        cowDeaths.append(1)
-    cowDeathSum = sum(cowDeaths)
-    cowDeathText = font.render("Cows Dead: " + str(cowDeathSum), True, (0, 0, 0))
+        if cow1_dead:
+            cowDeaths.append(1)
+        if cow2_dead:
+            cowDeaths.append(1)
+        if cow3_dead:
+            cowDeaths.append(1)
+        if cow4_dead:
+            cowDeaths.append(1)
+        if cow5_dead:
+            cowDeaths.append(1)
+        cowDeathSum = sum(cowDeaths)
+        cowDeathText = font.render("Cows Dead: " + str(cowDeathSum), True, (0, 0, 0))
 
-    sickCows = []
+        sickCows = []
 
-    if is_cow1_sick:
-        sickCows.append(1)
-    if is_cow2_sick:
-        sickCows.append(1)
-    if is_cow3_sick:
-        sickCows.append(1)
-    if is_cow4_sick:
-        sickCows.append(1)
-    if is_cow4_sick:
-        sickCows.append(1)
+        if is_cow1_sick:
+            sickCows.append(1)
+        if is_cow2_sick:
+            sickCows.append(1)
+        if is_cow3_sick:
+            sickCows.append(1)
+        if is_cow4_sick:
+            sickCows.append(1)
+        if is_cow4_sick:
+            sickCows.append(1)
 
-    sickCowSum = sum(sickCows)
-    sickCowsText = font.render("Cows Sqqqick: " + str(sickCowSum), True, (0, 0, 0))
+        sickCowSum = sum(sickCows)
+        sickCowsText = font.render("Cows Sick: " + str(sickCowSum), True, (0, 0, 0))
 
+        screen.blit(sickCowsText, (350, 390))
+        screen.blit(cowDeathText, (350, 420))
 
 #########################   game loop   ################################
 
