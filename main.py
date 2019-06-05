@@ -69,6 +69,8 @@ cow3_dead = False
 cow4_dead = False
 cow5_dead = False
 onAboutPage = False
+backButtonHovered = False
+backButtonPushed = False
 #################   create sprites   ######################
 
 spritey_da_sprite = player("sprite.png", 400, 300)
@@ -122,6 +124,10 @@ cow5 = sprite("cow.png", 400, 300)
 cow5.resize(92, 52)
 sickCow5 = sprite("sickcow.png", 400, 300)
 sickCow5.resize(92, 52)
+backButton = sprite("back button.png", 0, 0)
+backButton.resize(150, 50)
+backButtonLight = sprite("back button light.png", 0, 0)
+backButtonLight.resize(150, 50)
 
 cow1.x = random.randint(100, 700)
 cow1.y = random.randint(300, 500)
@@ -223,9 +229,6 @@ def gameOver(toxic, died):
         screen.blit(cowDeathText, (350, 420))
 
 
-def aboutPage():
-    screen.fill((0, 0, 0))
-
 #########################   game loop   ################################
 
 while 1:
@@ -242,7 +245,7 @@ while 1:
 
     if not startButtonPressed:
         if keys[pygame.K_SPACE]:
-            startButtonPressed = True
+            startButtonPressed = False
 
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
@@ -267,6 +270,7 @@ while 1:
             aboutButtonHovered = False
 
         screen.fill((255, 255, 255))
+        backButtonPushed = False
         startText = bigFont.render(gameName, True, (0, 0, 0))
         startBackgound.blit()
         screen.blit(startText, (100, 150))
@@ -280,7 +284,7 @@ while 1:
             aboutButtonlight.blit()
         elif not aboutButtonHovered:
             aboutButton.blit()
-
+        backButtonHovered = False
         pygame.display.flip()
 
     else:
@@ -900,10 +904,28 @@ while 1:
         gameOver(toxic, False)
 
     if onAboutPage == True:
-        aboutPage()
-        if keys[pygame.K_BACKSPACE]:
-            onAboutPage = False
 
+        if keys[pygame.K_BACKSPACE] or backButtonPushed:
+            onAboutPage = False
+        screen.fill((255, 255, 255))
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+        backButtonSize = backButton.sprite.get_size()
+
+        if backButton.x + backButtonSize[0] > mouse[0] > backButton.x and backButton.y + backButtonSize[1] > mouse[
+            1] > backButton.y:
+            backButtonHovered = True
+            if click[0] == 1:
+                time.sleep(0.1)
+                backButtonPushed = True
+                onAboutPage = False
+
+        if backButtonHovered:
+            backButtonLight.blit()
+        elif not backButtonHovered:
+            backButton.blit()
+
+    print(backButtonPushed)
     pygame.display.flip()
 
 # # # # # # #
