@@ -2,7 +2,7 @@
 #####################
 '''''''''''''''''''''
 
-gameName = ""
+gameName = "Protect The Farm"
 
 '''''''''''''''''''''
 #####################
@@ -49,6 +49,8 @@ onScreen4 = False
 onScreen5 = False
 startButtonPressed = False
 startButtonHovered = False
+aboutButtonPressed = False
+aboutButtonHovered = False
 clock = pygame.time.Clock()
 the_time = round(time.time() - start_time)
 time_left = 101 - the_time
@@ -66,6 +68,7 @@ cow2_dead = False
 cow3_dead = False
 cow4_dead = False
 cow5_dead = False
+onAboutPage = False
 #################   create sprites   ######################
 
 spritey_da_sprite = player("sprite.png", 400, 300)
@@ -85,10 +88,14 @@ enemy4 = enemy("gmo.png", 0, 0, 1, enemyMinSpeed, enemyMaxSpeed)
 enemy4.resize(70, 70)
 enemy5 = enemy("gmo.png", 0, 0, 1, enemyMinSpeed, enemyMaxSpeed)
 enemy5.resize(70, 70)
-startButton = sprite("startButton.png", 275, 300)
-startButton.resize(272, 120)
-startButtonlight = sprite("startButtonLight.png", 275, 300)
-startButtonlight.resize(272, 120)
+aboutButton = sprite("about button.png", 325, 400)
+aboutButton.resize(136, 60)
+aboutButtonlight = sprite("about button dark.png", 325, 400)
+aboutButtonlight.resize(136, 60)
+startButton = sprite("startButton.png", 310, 300)
+startButton.resize(170, 75)
+startButtonlight = sprite("startButtonLight.png", 310, 300)
+startButtonlight.resize(170, 75)
 startBackgound = sprite("startBackground.png", 0, 0)
 startBackgound.resize(800, 600)
 deadBackgound = sprite("game over.png", 0, 0)
@@ -215,6 +222,10 @@ def gameOver(toxic, died):
         screen.blit(sickCowsText, (350, 390))
         screen.blit(cowDeathText, (350, 420))
 
+
+def aboutPage():
+    screen.fill((0, 0, 0))
+
 #########################   game loop   ################################
 
 while 1:
@@ -235,8 +246,11 @@ while 1:
 
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
+        startButtonSize = startButton.sprite.get_size()
+        aboutButtonSize = aboutButton.sprite.get_size()
 
-        if 275 + 272 > mouse[1] > 275 and 300 + 120 > mouse[1] > 300:
+        if startButton.x + startButtonSize[0] > mouse[0] > startButton.x and startButton.y + startButtonSize[1] > mouse[
+            1] > startButton.y:
             startButtonHovered = True
             if click[0] == 1:
                 time.sleep(0.1)
@@ -244,17 +258,28 @@ while 1:
         else:
             startButtonHovered = False
 
+        if aboutButton.x + aboutButtonSize[0] > mouse[0] > aboutButton.x and aboutButton.y + aboutButtonSize[1] > mouse[
+            1] > aboutButton.y:
+            aboutButtonHovered = True
+            if click[0] == 1:
+                onAboutPage = True
+        else:
+            aboutButtonHovered = False
+
         screen.fill((255, 255, 255))
         startText = bigFont.render(gameName, True, (0, 0, 0))
         startBackgound.blit()
         screen.blit(startText, (100, 150))
 
-        if startButtonHovered == True:
+        if startButtonHovered:
             startButtonlight.blit()
-        elif startButtonHovered == False:
+        elif not startButtonHovered:
             startButton.blit()
 
-        pygame.draw.rect(screen, (255, 255, 255), (275, 300, 272, 120), 3)
+        if aboutButtonHovered:
+            aboutButtonlight.blit()
+        elif not aboutButtonHovered:
+            aboutButton.blit()
 
         pygame.display.flip()
 
@@ -873,6 +898,11 @@ while 1:
         onScreen1 = False
         screen.fill((255, 255, 255))
         gameOver(toxic, False)
+
+    if onAboutPage == True:
+        aboutPage()
+        if keys[pygame.K_BACKSPACE]:
+            onAboutPage = False
 
     pygame.display.flip()
 
