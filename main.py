@@ -29,7 +29,7 @@ pygame.display.set_caption("Top Down Shooter")
 ############  variabeles  ##############
 
 gameStart = False
-gametime = 30
+gametime = 20
 fps = 30
 speed = 15
 thing1 = 0
