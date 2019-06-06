@@ -39,13 +39,13 @@ class player(sprite):
 
     def move(self, speed):
         keys = pygame.key.get_pressed()
-        if keys[100]:
+        if keys[100] or keys[pygame.K_RIGHT]:
             self.x = self.x + speed
-        if keys[97]:
+        if keys[97] or keys[pygame.K_LEFT]:
             self.x = self.x - speed
-        if keys[115]:
+        if keys[115] or keys[pygame.K_DOWN]:
             self.y = self.y + speed
-        if keys[119]:
+        if keys[119] or keys[pygame.K_UP]:
             self.y = self.y - speed
 
     def reduce_health(self, damage):
