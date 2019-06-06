@@ -128,6 +128,8 @@ backButton = sprite("back button.png", 0, 0)
 backButton.resize(150, 50)
 backButtonLight = sprite("back button light.png", 0, 0)
 backButtonLight.resize(150, 50)
+aboutText = sprite("about page.png", 100, 0)
+aboutText.resize(711, 608)
 
 cow1.x = random.randint(100, 700)
 cow1.y = random.randint(300, 500)
@@ -924,8 +926,8 @@ while 1:
             backButtonLight.blit()
         elif not backButtonHovered:
             backButton.blit()
+        aboutText.blit()
 
-    print(backButtonPushed)
     pygame.display.flip()
 
 # # # # # # #
