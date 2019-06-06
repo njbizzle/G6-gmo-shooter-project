@@ -2,7 +2,7 @@
 #####################
 '''''''''''''''''''''
 
-gameName = "Protect The Farm"
+gameName = "Protect the Farm"
 
 '''''''''''''''''''''
 #####################
@@ -28,8 +28,8 @@ pygame.display.set_caption("Top Down Shooter")
 
 ############  variabeles  ##############
 
+gameStart = False
 gametime = 30
-start_time = time.time()
 fps = 30
 speed = 15
 thing1 = 0
@@ -52,8 +52,6 @@ startButtonHovered = False
 aboutButtonPressed = False
 aboutButtonHovered = False
 clock = pygame.time.Clock()
-the_time = round(time.time() - start_time)
-time_left = 101 - the_time
 change = 0.1
 toxic = 0
 isGameOver = False
@@ -234,9 +232,6 @@ def gameOver(toxic, died):
 #########################   game loop   ################################
 
 while 1:
-
-    the_time = round(time.time() - start_time)
-    timeText = font.render("Time: " + str(time_left), True, (0, 0, 0))
     pygame.event.get()
     keys = pygame.key.get_pressed()
 
@@ -290,9 +285,14 @@ while 1:
         pygame.display.flip()
 
     else:
-
+        if gameStart == False:
+            start_time = time.time()
+            gameStart = True
+        the_time = round(time.time() - start_time)
         spritey_da_sprite.move(speed)
-        time_left = gametime + 1 - the_time
+        time_left = gametime - the_time
+        the_time = round(time.time() - start_time)
+        timeText = font.render("Time: " + str(time_left), True, (0, 0, 0))
 
         ##################   shooting   #####################
 
@@ -885,25 +885,25 @@ while 1:
         screen.blit(scoreText, (670, 10))
         screen.blit(timeText, (670, 30))
 
-    if lives == 0 and stop == False:
-        onScreen5 = False
-        onScreen4 = False
-        onScreen3 = False
-        onScreen2 = False
-        onScreen1 = False
-        screen.fill((255, 255, 255))
-        gameOver(toxic, True)
-        time_left = 1
+        if lives == 0 and stop == False:
+            onScreen5 = False
+            onScreen4 = False
+            onScreen3 = False
+            onScreen2 = False
+            onScreen1 = False
+            screen.fill((255, 255, 255))
+            gameOver(toxic, True)
+            time_left = 1
 
-    if time_left < 0:
-        stop = True
-        onScreen5 = False
-        onScreen4 = False
-        onScreen3 = False
-        onScreen2 = False
-        onScreen1 = False
-        screen.fill((255, 255, 255))
-        gameOver(toxic, False)
+        if time_left < 0:
+            stop = True
+            onScreen5 = False
+            onScreen4 = False
+            onScreen3 = False
+            onScreen2 = False
+            onScreen1 = False
+            screen.fill((255, 255, 255))
+            gameOver(toxic, False)
 
     if onAboutPage == True:
 
