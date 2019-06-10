@@ -69,6 +69,7 @@ cow5_dead = False
 onAboutPage = False
 backButtonHovered = False
 backButtonPushed = False
+continueToGame = False
 #################   create sprites   ######################
 
 spritey_da_sprite = player("sprite.png", 400, 300)
@@ -285,625 +286,629 @@ while 1:
         pygame.display.flip()
 
     else:
-        if gameStart == False:
-            start_time = time.time()
-            gameStart = True
-        the_time = round(time.time() - start_time)
-        spritey_da_sprite.move(speed)
-        time_left = gametime - the_time
-        the_time = round(time.time() - start_time)
-        timeText = font.render("Time: " + str(time_left), True, (0, 0, 0))
+        if continueToGame == False:
+            screen.fill((0, 0, 0))
+            if keys[pygame.K_SPACE]:
+                continueToGame = True
+        else:
+            if gameStart == False:
+                start_time = time.time()
+                gameStart = True
+            the_time = round(time.time() - start_time)
+            spritey_da_sprite.move(speed)
+            time_left = gametime - the_time
+            the_time = round(time.time() - start_time)
+            timeText = font.render("Time: " + str(time_left), True, (0, 0, 0))
 
-        ##################   shooting   #####################
+            ##################   shooting   #####################
 
-        if keys[pygame.K_SPACE]:
-            shooting1 = True
+            if keys[pygame.K_SPACE]:
+                shooting1 = True
 
-        if shooting1 == False:
-            lazer1.x = spritey_da_sprite.x + 66.5
-            lazer1.y = spritey_da_sprite.y + 5
+            if shooting1 == False:
+                lazer1.x = spritey_da_sprite.x + 66.5
+                lazer1.y = spritey_da_sprite.y + 5
 
-        if shooting1 == True:
-            lazer1.y -= shootSpeed
+            if shooting1 == True:
+                lazer1.y -= shootSpeed
 
-        if lazer1.x > 800 or lazer1.x < 0:
-            shooting1 = False
+            if lazer1.x > 800 or lazer1.x < 0:
+                shooting1 = False
 
-        if lazer1.y > 600 or lazer1.y < 0:
-            shooting1 = False
+            if lazer1.y > 600 or lazer1.y < 0:
+                shooting1 = False
 
-        if resetLazer == True:
-            shooting1 = False
+            if resetLazer == True:
+                shooting1 = False
 
-        ###################   colider   ###################
+            ###################   colider   ###################
 
-        if enemy1.rect.colliderect(lazer1.rect):
-            if enemy1.hit():
+            if enemy1.rect.colliderect(lazer1.rect):
+                if enemy1.hit():
+                    score += 1
+                    enemyMinSpeed += change
+                    enemyMaxSpeed += change
+                    change -= 0.02
+
+            if enemy2.rect.colliderect(lazer1.rect):
+                if enemy2.hit():
+                    score += 1
+                    enemyMinSpeed += change
+                    enemyMaxSpeed += change
+                    change -= 0.02
+
+            if enemy3.rect.colliderect(lazer1.rect):
+                if enemy3.hit():
+                    score += 1
+                    enemyMinSpeed += change
+                    enemyMaxSpeed += change
+                    change -= 0.02
+
+            if enemy4.rect.colliderect(lazer1.rect):
+                if enemy4.hit():
+                    score += 1
+                    enemyMinSpeed += change
+                    enemyMaxSpeed += change
+                    change -= 0.02
+
+            if enemy5.rect.colliderect(lazer1.rect):
+                if enemy5.hit():
+                    score += 1
+                    enemyMinSpeed += change
+                    enemyMaxSpeed += change
+                    change -= 0.02
+
+            ###################    cow colider   ########################
+
+            if enemy1.rect.colliderect(cow1.rect) and not is_cow1_sick:
+                enemy1.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                is_cow1_sick = True
+            elif enemy1.rect.colliderect(cow1.rect) and is_cow1_sick:
+                enemy1.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow1_dead = True
+
+            if enemy2.rect.colliderect(cow1.rect) and not is_cow1_sick:
+                enemy2.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                is_cow1_sick = True
+            elif enemy2.rect.colliderect(cow1.rect) and is_cow1_sick:
+                enemy2.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow1_dead = True
+
+            if enemy3.rect.colliderect(cow1.rect) and not is_cow1_sick:
+                enemy3.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                is_cow1_sick = True
+            elif enemy3.rect.colliderect(cow1.rect) and is_cow1_sick:
+                enemy3.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow1_dead = True
+
+            if enemy4.rect.colliderect(cow1.rect) and not is_cow1_sick:
+                enemy4.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                is_cow1_sick = True
+            elif enemy4.rect.colliderect(cow1.rect) and is_cow1_sick:
+                enemy4.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow1_dead = True
+
+            if enemy5.rect.colliderect(cow1.rect) and not is_cow1_sick:
+                enemy5.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                is_cow1_sick = True
+            elif enemy5.rect.colliderect(cow1.rect) and is_cow1_sick:
+                enemy5.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow1_dead = True
+            '''
+            '''
+            if enemy1.rect.colliderect(cow2.rect) and not is_cow2_sick:
+                enemy1.hit()
                 score += 1
                 enemyMinSpeed += change
                 enemyMaxSpeed += change
                 change -= 0.02
+                is_cow2_sick = True
+            elif enemy1.rect.colliderect(cow2.rect) and is_cow2_sick:
+                enemy1.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow2_dead = True
 
-        if enemy2.rect.colliderect(lazer1.rect):
-            if enemy2.hit():
+            if enemy2.rect.colliderect(cow2.rect) and not is_cow2_sick:
+                enemy2.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                is_cow2_sick = True
+            elif enemy2.rect.colliderect(cow2.rect) and is_cow2_sick:
+                enemy2.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow2_dead = True
+
+            if enemy3.rect.colliderect(cow2.rect) and not is_cow2_sick:
+                enemy3.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                is_cow2_sick = True
+            elif enemy3.rect.colliderect(cow2.rect) and is_cow2_sick:
+                enemy3.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow2_dead = True
+
+            if enemy4.rect.colliderect(cow2.rect) and not is_cow2_sick:
+                enemy4.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                is_cow2_sick = True
+            elif enemy4.rect.colliderect(cow2.rect) and is_cow2_sick:
+                enemy4.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow2_dead = True
+
+            if enemy5.rect.colliderect(cow2.rect) and not is_cow2_sick:
+                enemy5.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                is_cow2_sick = True
+            elif enemy5.rect.colliderect(cow2.rect) and is_cow2_sick:
+                enemy5.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow2_dead = True
+            '''
+            '''
+            if enemy1.rect.colliderect(cow3.rect) and not is_cow3_sick:
+                enemy1.hit()
                 score += 1
                 enemyMinSpeed += change
                 enemyMaxSpeed += change
                 change -= 0.02
+                is_cow3_sick = True
+            elif enemy1.rect.colliderect(cow3.rect) and is_cow3_sick:
+                enemy1.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow3_dead = True
 
-        if enemy3.rect.colliderect(lazer1.rect):
-            if enemy3.hit():
+            if enemy2.rect.colliderect(cow3.rect) and not is_cow3_sick:
+                enemy2.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                is_cow3_sick = True
+            elif enemy2.rect.colliderect(cow3.rect) and is_cow3_sick:
+                enemy2.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow3_dead = True
+
+            if enemy3.rect.colliderect(cow3.rect) and not is_cow3_sick:
+                enemy3.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                is_cow3_sick = True
+            elif enemy3.rect.colliderect(cow3.rect) and is_cow3_sick:
+                enemy3.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow3_dead = True
+
+            if enemy4.rect.colliderect(cow3.rect) and not is_cow3_sick:
+                enemy4.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                is_cow3_sick = True
+            elif enemy4.rect.colliderect(cow3.rect) and is_cow3_sick:
+                enemy4.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow3_dead = True
+
+            if enemy5.rect.colliderect(cow3.rect) and not is_cow3_sick:
+                enemy5.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                is_cow3_sick = True
+            elif enemy5.rect.colliderect(cow3.rect) and is_cow3_sick:
+                enemy5.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow3_dead = True
+            '''
+            '''
+            if enemy1.rect.colliderect(cow4.rect) and not is_cow4_sick:
+                enemy1.hit()
                 score += 1
                 enemyMinSpeed += change
                 enemyMaxSpeed += change
                 change -= 0.02
+                is_cow4_sick = True
+            elif enemy1.rect.colliderect(cow4.rect) and is_cow4_sick:
+                enemy1.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow4_dead = True
 
-        if enemy4.rect.colliderect(lazer1.rect):
-            if enemy4.hit():
+            if enemy2.rect.colliderect(cow4.rect) and not is_cow4_sick:
+                enemy2.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                is_cow4_sick = True
+            elif enemy2.rect.colliderect(cow4.rect) and is_cow4_sick:
+                enemy2.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow4_dead = True
+
+            if enemy3.rect.colliderect(cow4.rect) and not is_cow4_sick:
+                enemy3.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                is_cow4_sick = True
+            elif enemy3.rect.colliderect(cow4.rect) and is_cow4_sick:
+                enemy3.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow4_dead = True
+
+            if enemy4.rect.colliderect(cow4.rect) and not is_cow4_sick:
+                enemy4.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                is_cow4_sick = True
+            elif enemy4.rect.colliderect(cow4.rect) and is_cow4_sick:
+                enemy4.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow4_dead = True
+
+            if enemy5.rect.colliderect(cow4.rect) and not is_cow4_sick:
+                enemy5.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                is_cow4_sick = True
+            elif enemy5.rect.colliderect(cow4.rect) and is_cow4_sick:
+                enemy5.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow4_dead = True
+            '''
+            '''
+            if enemy1.rect.colliderect(cow5.rect) and not is_cow5_sick:
+                enemy1.hit()
                 score += 1
                 enemyMinSpeed += change
                 enemyMaxSpeed += change
                 change -= 0.02
-
-        if enemy5.rect.colliderect(lazer1.rect):
-            if enemy5.hit():
-                score += 1
+                is_cow5_sick = True
+            elif enemy1.rect.colliderect(cow5.rect) and is_cow5_sick:
+                enemy1.hit()
                 enemyMinSpeed += change
                 enemyMaxSpeed += change
                 change -= 0.02
+                cow5_dead = True
 
-        ###################    cow colider   ########################
+            if enemy2.rect.colliderect(cow5.rect) and not is_cow5_sick:
+                enemy2.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                is_cow5_sick = True
+            elif enemy2.rect.colliderect(cow5.rect) and is_cow5_sick:
+                enemy2.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow5_dead = True
 
-        if enemy1.rect.colliderect(cow1.rect) and not is_cow1_sick:
-            enemy1.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow1_sick = True
-        elif enemy1.rect.colliderect(cow1.rect) and is_cow1_sick:
-            enemy1.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow1_dead = True
+            if enemy3.rect.colliderect(cow5.rect) and not is_cow5_sick:
+                enemy3.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                is_cow5_sick = True
+            elif enemy5.rect.colliderect(cow5.rect) and is_cow5_sick:
+                enemy3.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow5_dead = True
 
-        if enemy2.rect.colliderect(cow1.rect) and not is_cow1_sick:
-            enemy2.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow1_sick = True
-        elif enemy2.rect.colliderect(cow1.rect) and is_cow1_sick:
-            enemy2.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow1_dead = True
+            if enemy4.rect.colliderect(cow5.rect) and not is_cow5_sick:
+                enemy4.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                is_cow5_sick = True
+            elif enemy5.rect.colliderect(cow5.rect) and is_cow5_sick:
+                enemy4.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow5_dead = True
 
-        if enemy3.rect.colliderect(cow1.rect) and not is_cow1_sick:
-            enemy3.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow1_sick = True
-        elif enemy3.rect.colliderect(cow1.rect) and is_cow1_sick:
-            enemy3.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow1_dead = True
+            if enemy5.rect.colliderect(cow5.rect) and not is_cow5_sick:
+                enemy5.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                is_cow5_sick = True
+            elif enemy5.rect.colliderect(cow5.rect) and is_cow5_sick:
+                enemy5.hit()
+                enemyMinSpeed += change
+                enemyMaxSpeed += change
+                change -= 0.02
+                cow5_dead = True
+            ################   player colider  #####################
 
-        if enemy4.rect.colliderect(cow1.rect) and not is_cow1_sick:
-            enemy4.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow1_sick = True
-        elif enemy4.rect.colliderect(cow1.rect) and is_cow1_sick:
-            enemy4.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow1_dead = True
+            if spritey_da_sprite.rect.colliderect(enemy1.rect):
+                lives = 0
+                isGameOver = True
+            if spritey_da_sprite.rect.colliderect(enemy2.rect):
+                lives = 0
+                isGameOver = True
+            if spritey_da_sprite.rect.colliderect(enemy3.rect):
+                lives = 0
+                isGameOver = True
+            if spritey_da_sprite.rect.colliderect(enemy4.rect):
+                lives = 0
+                isGameOver = True
+            if spritey_da_sprite.rect.colliderect(enemy5.rect):
+                lives = 0
+                isGameOver = True
+            ###################  cows ###############################
 
-        if enemy5.rect.colliderect(cow1.rect) and not is_cow1_sick:
-            enemy5.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow1_sick = True
-        elif enemy5.rect.colliderect(cow1.rect) and is_cow1_sick:
-            enemy5.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow1_dead = True
-        '''
-        '''
-        if enemy1.rect.colliderect(cow2.rect) and not is_cow2_sick:
-            enemy1.hit()
-            score += 1
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow2_sick = True
-        elif enemy1.rect.colliderect(cow2.rect) and is_cow2_sick:
-            enemy1.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow2_dead = True
+            sickCow1.x = cow1.x
+            sickCow1.y = cow1.y
 
-        if enemy2.rect.colliderect(cow2.rect) and not is_cow2_sick:
-            enemy2.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow2_sick = True
-        elif enemy2.rect.colliderect(cow2.rect) and is_cow2_sick:
-            enemy2.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow2_dead = True
+            sickCow2.x = cow2.x
+            sickCow2.y = cow2.y
 
-        if enemy3.rect.colliderect(cow2.rect) and not is_cow2_sick:
-            enemy3.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow2_sick = True
-        elif enemy3.rect.colliderect(cow2.rect) and is_cow2_sick:
-            enemy3.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow2_dead = True
+            sickCow3.x = cow3.x
+            sickCow3.y = cow3.y
 
-        if enemy4.rect.colliderect(cow2.rect) and not is_cow2_sick:
-            enemy4.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow2_sick = True
-        elif enemy4.rect.colliderect(cow2.rect) and is_cow2_sick:
-            enemy4.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow2_dead = True
+            sickCow4.x = cow4.x
+            sickCow4.y = cow4.y
 
-        if enemy5.rect.colliderect(cow2.rect) and not is_cow2_sick:
-            enemy5.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow2_sick = True
-        elif enemy5.rect.colliderect(cow2.rect) and is_cow2_sick:
-            enemy5.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow2_dead = True
-        '''
-        '''
-        if enemy1.rect.colliderect(cow3.rect) and not is_cow3_sick:
-            enemy1.hit()
-            score += 1
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow3_sick = True
-        elif enemy1.rect.colliderect(cow3.rect) and is_cow3_sick:
-            enemy1.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow3_dead = True
+            sickCow5.x = cow5.x
+            sickCow5.y = cow5.y
 
-        if enemy2.rect.colliderect(cow3.rect) and not is_cow3_sick:
-            enemy2.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow3_sick = True
-        elif enemy2.rect.colliderect(cow3.rect) and is_cow3_sick:
-            enemy2.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow3_dead = True
+            ###################    enemy stuff    #####################
 
-        if enemy3.rect.colliderect(cow3.rect) and not is_cow3_sick:
-            enemy3.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow3_sick = True
-        elif enemy3.rect.colliderect(cow3.rect) and is_cow3_sick:
-            enemy3.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow3_dead = True
+            if onScreen1:
+                enemy1.move(enemyMinSpeed, enemyMaxSpeed)
+            if enemy1.y > 700 and onScreen1 == True:
+                enemy1.y = 0
+                enemy1.x = random.randint(100, 700)
+                toxic += 1
+            if not onScreen1:
+                enemy1.ranPos()
 
-        if enemy4.rect.colliderect(cow3.rect) and not is_cow3_sick:
-            enemy4.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow3_sick = True
-        elif enemy4.rect.colliderect(cow3.rect) and is_cow3_sick:
-            enemy4.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow3_dead = True
+            if onScreen2:
+                enemy2.move(enemyMinSpeed, enemyMaxSpeed)
+            if enemy2.y > 700 and onScreen2 == True:
+                enemy2.y = 0
+                enemy2.x = random.randint(100, 700)
+                toxic += 1
+            if not onScreen2:
+                enemy2.ranPos()
 
-        if enemy5.rect.colliderect(cow3.rect) and not is_cow3_sick:
-            enemy5.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow3_sick = True
-        elif enemy5.rect.colliderect(cow3.rect) and is_cow3_sick:
-            enemy5.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow3_dead = True
-        '''
-        '''
-        if enemy1.rect.colliderect(cow4.rect) and not is_cow4_sick:
-            enemy1.hit()
-            score += 1
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow4_sick = True
-        elif enemy1.rect.colliderect(cow4.rect) and is_cow4_sick:
-            enemy1.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow4_dead = True
+            if onScreen3:
+                enemy3.move(enemyMinSpeed, enemyMaxSpeed)
+            if enemy3.y > 700 and onScreen3 == True:
+                enemy3.y = 0
+                enemy3.x = random.randint(100, 700)
+                toxic += 1
+            if not onScreen3:
+                enemy3.ranPos()
 
-        if enemy2.rect.colliderect(cow4.rect) and not is_cow4_sick:
-            enemy2.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow4_sick = True
-        elif enemy2.rect.colliderect(cow4.rect) and is_cow4_sick:
-            enemy2.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow4_dead = True
+            if onScreen4:
+                enemy4.move(enemyMinSpeed, enemyMaxSpeed)
+            if enemy4.y > 700 and onScreen4 == True:
+                enemy4.y = 0
+                enemy4.x = random.randint(100, 700)
+                toxic += 1
+            if not onScreen4:
+                enemy4.ranPos()
 
-        if enemy3.rect.colliderect(cow4.rect) and not is_cow4_sick:
-            enemy3.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow4_sick = True
-        elif enemy3.rect.colliderect(cow4.rect) and is_cow4_sick:
-            enemy3.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow4_dead = True
+            if onScreen5:
+                enemy5.move(enemyMinSpeed, enemyMaxSpeed)
+            if enemy5.y > 700 and onScreen5 == True:
+                enemy5.y = 0
+                enemy5.x = random.randint(100, 700)
+                toxic += 1
+            if not onScreen5:
+                enemy5.ranPos()
+            ###################   bliting and stuff   ######################
 
-        if enemy4.rect.colliderect(cow4.rect) and not is_cow4_sick:
-            enemy4.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow4_sick = True
-        elif enemy4.rect.colliderect(cow4.rect) and is_cow4_sick:
-            enemy4.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow4_dead = True
+            if spritey_da_sprite.x > 750:
+                spritey_da_sprite.x = 750
+            elif spritey_da_sprite.x < -50:
+                spritey_da_sprite.x = -50
+            elif spritey_da_sprite.y > 550:
+                spritey_da_sprite.y = 550
+            elif spritey_da_sprite.y < -50:
+                spritey_da_sprite.y = -50
 
-        if enemy5.rect.colliderect(cow4.rect) and not is_cow4_sick:
-            enemy5.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow4_sick = True
-        elif enemy5.rect.colliderect(cow4.rect) and is_cow4_sick:
-            enemy5.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow4_dead = True
-        '''
-        '''
-        if enemy1.rect.colliderect(cow5.rect) and not is_cow5_sick:
-            enemy1.hit()
-            score += 1
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow5_sick = True
-        elif enemy1.rect.colliderect(cow5.rect) and is_cow5_sick:
-            enemy1.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow5_dead = True
-
-        if enemy2.rect.colliderect(cow5.rect) and not is_cow5_sick:
-            enemy2.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow5_sick = True
-        elif enemy2.rect.colliderect(cow5.rect) and is_cow5_sick:
-            enemy2.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow5_dead = True
-
-        if enemy3.rect.colliderect(cow5.rect) and not is_cow5_sick:
-            enemy3.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow5_sick = True
-        elif enemy5.rect.colliderect(cow5.rect) and is_cow5_sick:
-            enemy3.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow5_dead = True
-
-        if enemy4.rect.colliderect(cow5.rect) and not is_cow5_sick:
-            enemy4.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow5_sick = True
-        elif enemy5.rect.colliderect(cow5.rect) and is_cow5_sick:
-            enemy4.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow5_dead = True
-
-        if enemy5.rect.colliderect(cow5.rect) and not is_cow5_sick:
-            enemy5.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            is_cow5_sick = True
-        elif enemy5.rect.colliderect(cow5.rect) and is_cow5_sick:
-            enemy5.hit()
-            enemyMinSpeed += change
-            enemyMaxSpeed += change
-            change -= 0.02
-            cow5_dead = True
-        ################   player colider  #####################
-
-        if spritey_da_sprite.rect.colliderect(enemy1.rect):
-            lives = 0
-            isGameOver = True
-        if spritey_da_sprite.rect.colliderect(enemy2.rect):
-            lives = 0
-            isGameOver = True
-        if spritey_da_sprite.rect.colliderect(enemy3.rect):
-            lives = 0
-            isGameOver = True
-        if spritey_da_sprite.rect.colliderect(enemy4.rect):
-            lives = 0
-            isGameOver = True
-        if spritey_da_sprite.rect.colliderect(enemy5.rect):
-            lives = 0
-            isGameOver = True
-        ###################  cows ###############################
-
-        sickCow1.x = cow1.x
-        sickCow1.y = cow1.y
-
-        sickCow2.x = cow2.x
-        sickCow2.y = cow2.y
-
-        sickCow3.x = cow3.x
-        sickCow3.y = cow3.y
-
-        sickCow4.x = cow4.x
-        sickCow4.y = cow4.y
-
-        sickCow5.x = cow5.x
-        sickCow5.y = cow5.y
-
-        ###################    enemy stuff    #####################
-
-        if onScreen1:
-            enemy1.move(enemyMinSpeed, enemyMaxSpeed)
-        if enemy1.y > 700 and onScreen1 == True:
-            enemy1.y = 0
-            enemy1.x = random.randint(100, 700)
-            toxic += 1
-        if not onScreen1:
-            enemy1.ranPos()
-
-        if onScreen2:
-            enemy2.move(enemyMinSpeed, enemyMaxSpeed)
-        if enemy2.y > 700 and onScreen2 == True:
-            enemy2.y = 0
-            enemy2.x = random.randint(100, 700)
-            toxic += 1
-        if not onScreen2:
-            enemy2.ranPos()
-
-        if onScreen3:
-            enemy3.move(enemyMinSpeed, enemyMaxSpeed)
-        if enemy3.y > 700 and onScreen3 == True:
-            enemy3.y = 0
-            enemy3.x = random.randint(100, 700)
-            toxic += 1
-        if not onScreen3:
-            enemy3.ranPos()
-
-        if onScreen4:
-            enemy4.move(enemyMinSpeed, enemyMaxSpeed)
-        if enemy4.y > 700 and onScreen4 == True:
-            enemy4.y = 0
-            enemy4.x = random.randint(100, 700)
-            toxic += 1
-        if not onScreen4:
-            enemy4.ranPos()
-
-        if onScreen5:
-            enemy5.move(enemyMinSpeed, enemyMaxSpeed)
-        if enemy5.y > 700 and onScreen5 == True:
-            enemy5.y = 0
-            enemy5.x = random.randint(100, 700)
-            toxic += 1
-        if not onScreen5:
-            enemy5.ranPos()
-        ###################   bliting and stuff   ######################
-
-        if spritey_da_sprite.x > 750:
-            spritey_da_sprite.x = 750
-        elif spritey_da_sprite.x < -50:
-            spritey_da_sprite.x = -50
-        elif spritey_da_sprite.y > 550:
-            spritey_da_sprite.y = 550
-        elif spritey_da_sprite.y < -50:
-            spritey_da_sprite.y = -50
-
-        screen.fill((255, 255, 255))
-        background.blit()
-
-        if change < 0.1:
-            change = 0.1
-
-        clock.tick(fps)
-
-        if not cow1_dead:
-            if not is_cow1_sick:
-                cow1.blit()
-                cow1.drawHitBox()
-            else:
-                sickCow1.blit()
-                cow1.drawHitBox()
-        else:
-            cow1.x = 10000
-            sickCow1.x = 10000
-            cow1.drawHitBox()
-            is_cow1_sick = False
-
-        if not cow2_dead:
-            if not is_cow2_sick:
-                cow2.blit()
-                cow2.drawHitBox()
-            else:
-                sickCow2.blit()
-                cow2.drawHitBox()
-        else:
-            cow2.x = 10000
-            sickCow2.x = 10000
-            cow2.drawHitBox()
-            is_cow2_sick = False
-
-        if not cow3_dead:
-            if not is_cow3_sick:
-                cow3.blit()
-                cow3.drawHitBox()
-            else:
-                sickCow3.blit()
-                cow3.drawHitBox()
-        else:
-            cow3.x = 10000
-            sickCow3.x = 10000
-            cow3.drawHitBox()
-            is_cow3_sick = False
-
-        if not cow4_dead:
-            if not is_cow4_sick:
-                cow4.blit()
-                cow4.drawHitBox()
-            else:
-                sickCow4.blit()
-                cow4.drawHitBox()
-        else:
-            cow4.x = 10000
-            sickCow4.x = 10000
-            cow4.drawHitBox()
-            is_cow4_sick = False
-
-        if not cow5_dead:
-            if not is_cow5_sick:
-                cow5.blit()
-                cow5.drawHitBox()
-            else:
-                sickCow5.blit()
-                cow5.drawHitBox()
-        else:
-            cow5.x = 10000
-            sickCow5.x = 10000
-            cow5.drawHitBox()
-            is_cow5_sick = False
-
-        spritey_da_sprite.blit()
-        lazer1.blit()
-
-        enemy1.blit()
-        enemy1.drawHitBox()
-        onScreen1 = True
-
-        if score > 5:
-            onScreen2 = True
-            enemy2.blit()
-            enemy2.drawHitBox()
-
-        if score > 10:
-            onScreen3 = True
-            enemy3.blit()
-            enemy3.drawHitBox()
-
-        if score > 15:
-            onScreen4 = True
-            enemy4.blit()
-            enemy4.drawHitBox()
-
-        if score > 20:
-            onScreen5 = True
-            enemy5.blit()
-            enemy5.drawHitBox()
-
-
-        lazer1.drawHitBox()
-        spritey_da_sprite.drawPlayerHitBox()
-        scoreText = font.render('Score: ' + str(score), True, (0, 0, 0))
-
-        screen.blit(scoreText, (670, 10))
-        screen.blit(timeText, (670, 30))
-
-        if lives == 0 and stop == False:
-            onScreen5 = False
-            onScreen4 = False
-            onScreen3 = False
-            onScreen2 = False
-            onScreen1 = False
             screen.fill((255, 255, 255))
-            gameOver(toxic, True)
-            time_left = 1
+            background.blit()
 
-        if time_left < 0:
-            stop = True
-            onScreen5 = False
-            onScreen4 = False
-            onScreen3 = False
-            onScreen2 = False
-            onScreen1 = False
-            screen.fill((255, 255, 255))
-            gameOver(toxic, False)
+            if change < 0.1:
+                change = 0.1
+
+            clock.tick(fps)
+
+            if not cow1_dead:
+                if not is_cow1_sick:
+                    cow1.blit()
+                    cow1.drawHitBox()
+                else:
+                    sickCow1.blit()
+                    cow1.drawHitBox()
+            else:
+                cow1.x = 10000
+                sickCow1.x = 10000
+                cow1.drawHitBox()
+                is_cow1_sick = False
+
+            if not cow2_dead:
+                if not is_cow2_sick:
+                    cow2.blit()
+                    cow2.drawHitBox()
+                else:
+                    sickCow2.blit()
+                    cow2.drawHitBox()
+            else:
+                cow2.x = 10000
+                sickCow2.x = 10000
+                cow2.drawHitBox()
+                is_cow2_sick = False
+
+            if not cow3_dead:
+                if not is_cow3_sick:
+                    cow3.blit()
+                    cow3.drawHitBox()
+                else:
+                    sickCow3.blit()
+                    cow3.drawHitBox()
+            else:
+                cow3.x = 10000
+                sickCow3.x = 10000
+                cow3.drawHitBox()
+                is_cow3_sick = False
+
+            if not cow4_dead:
+                if not is_cow4_sick:
+                    cow4.blit()
+                    cow4.drawHitBox()
+                else:
+                    sickCow4.blit()
+                    cow4.drawHitBox()
+            else:
+                cow4.x = 10000
+                sickCow4.x = 10000
+                cow4.drawHitBox()
+                is_cow4_sick = False
+
+            if not cow5_dead:
+                if not is_cow5_sick:
+                    cow5.blit()
+                    cow5.drawHitBox()
+                else:
+                    sickCow5.blit()
+                    cow5.drawHitBox()
+            else:
+                cow5.x = 10000
+                sickCow5.x = 10000
+                cow5.drawHitBox()
+                is_cow5_sick = False
+
+            spritey_da_sprite.blit()
+            lazer1.blit()
+
+            enemy1.blit()
+            enemy1.drawHitBox()
+            onScreen1 = True
+
+            if score > 5:
+                onScreen2 = True
+                enemy2.blit()
+                enemy2.drawHitBox()
+
+            if score > 10:
+                onScreen3 = True
+                enemy3.blit()
+                enemy3.drawHitBox()
+
+            if score > 15:
+                onScreen4 = True
+                enemy4.blit()
+                enemy4.drawHitBox()
+
+            if score > 20:
+                onScreen5 = True
+                enemy5.blit()
+                enemy5.drawHitBox()
+
+            lazer1.drawHitBox()
+            spritey_da_sprite.drawPlayerHitBox()
+            scoreText = font.render('Score: ' + str(score), True, (0, 0, 0))
+
+            screen.blit(scoreText, (670, 10))
+            screen.blit(timeText, (670, 30))
+
+            if lives == 0 and stop == False:
+                onScreen5 = False
+                onScreen4 = False
+                onScreen3 = False
+                onScreen2 = False
+                onScreen1 = False
+                screen.fill((255, 255, 255))
+                gameOver(toxic, True)
+                time_left = 1
+
+            if time_left < 0:
+                stop = True
+                onScreen5 = False
+                onScreen4 = False
+                onScreen3 = False
+                onScreen2 = False
+                onScreen1 = False
+                screen.fill((255, 255, 255))
+                gameOver(toxic, False)
 
     if onAboutPage == True:
 
